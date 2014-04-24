@@ -17,7 +17,10 @@
     - backup: minion
 
 git:
- pkg:
-  - installed
+  pkg:
+    - installed
 
-      
+npm:
+  pkg:
+    - installed
+  

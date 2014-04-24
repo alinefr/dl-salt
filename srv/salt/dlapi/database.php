@@ -6,9 +6,9 @@ return array(
         'mysql' => array(
 		'driver'   => 'mysql',
 		'host'     => 'localhost',
-		'username' => 'root',
-		'password' => '',
-		'database' => 'dlapi',
+		'username' => '{{ pillar['mysql_user'] }}',
+		'password' => '{{ pillar['mysql_pass'] }}',
+		'database' => '{{ pillar['mysql_db'] }}',
 		'collation' => 'utf8_general_ci',
 		'charset' => 'utf8'
 	),
