@@ -50,7 +50,7 @@ dl-api:
     - watch:
       - git: dl-api
 
-{{ pillar['root'] }}/app/config/database.php
+{{ pillar['root'] }}/app/config/database.php:
   file.managed:
     - source: 
       - salt://dlapi/database.php
