@@ -18,7 +18,7 @@ vagrant:
 
 vagrant-nginx-available:
   file.managed:
-    - name: /etc/nginx/sites-available/{{ pillar['user'] }}.conf
+    - name: /etc/nginx/sites-available/{{ pillar['server_name'] }}.conf
     - source: salt://sites/vagrant.conf
     - template: jinja
     - watch_in:
@@ -28,7 +28,7 @@ vagrant-nginx-available:
 
 vagrant-nginx-enabled:
   file.symlink:
-    - name: {{ sites_enabled }}/{{ pillar['user'] }}.conf
-    - target: /etc/nginx/sites-available/{{ pillar['user'] }}.conf
+    - name: {{ sites_enabled }}/{{ pillar['server_name'] }}.conf
+    - target: /etc/nginx/sites-available/{{ pillar['server_name'] }}.conf
     - watch_in:
       - service: nginx

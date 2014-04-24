@@ -23,6 +23,8 @@ get-composer:
     - name: 'CURL=`which curl`; $CURL -sS https://getcomposer.org/installer | php'
     - unless: test -f /usr/local/bin/composer
     - cwd: /root/
+    - require:
+      - pkg: php_cli
 
 install-composer:
   cmd.wait:
@@ -35,17 +37,27 @@ dl-api:
   git.latest:
     - name: git@github.com:doubleleft/dl-api.git
     - rev: master
-    - target: /srv/www
+    - target: {{ pillar['root'] }}
     - identity: /home/{{ pillar['user'] }}/.ssh/id_rsa
     - force: True
     - require:
       - pkg: git
+      - pkg: npm
       - file: ssh-private-key
   cmd.wait:
     - name: make
-    - cwd: /srv/www
+    - cwd: {{ pillar['root'] }}
     - watch:
       - git: dl-api
+
+{{ pillar['root'] }}/app/config/database.php
+  file.managed:
+    - source: 
+      - salt://dlapi/database.php
+      - user: {{ pillar['user'] }}
+      - group: {{ pillar['group'] }}
+      - mode: 644
+      - backup: minion
 
 
   
