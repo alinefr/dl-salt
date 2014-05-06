@@ -65,8 +65,7 @@ dl-api-genkey:
     - name: dl-api -e http://{{ pillar['server_name'] }}/api app:new {{ pillar['server_name'] }}
     - unless: dl-api apps | grep '\b{{ pillar['server_name'] }}$'
     - cwd: {{ pillar['root'] }}
-    - require:
-      - cmd: dl-api
+    - onlyif: test -f /home/{{ pillar['user'] }}/bin/dl-api
 
   
 
