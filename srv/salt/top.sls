@@ -5,4 +5,4 @@ base:
     - nginx
     - php_fpm
     - sites.vagrant
-    - wordpress
+    - dlapi

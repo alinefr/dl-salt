@@ -2,7 +2,7 @@
 
 return array(
 
-    {% if pillar['dbdriver'] == mysql %}
+    {% if pillar['dbdriver'] == 'mysql' %}
         'mysql' => array(
 		'driver'   => 'mysql',
 		'host'     => 'localhost',

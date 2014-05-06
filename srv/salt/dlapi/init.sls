@@ -50,7 +50,7 @@ dl-api:
     - watch:
       - git: dl-api
 
-{{ pillar['root'] }}/app/config/database.php:
+{{ pillar['root'] }}/api/app/config/database.php:
   file.managed:
     - source: 
       - salt://dlapi/database.php
@@ -58,7 +58,15 @@ dl-api:
       - group: {{ pillar['group'] }}
       - mode: 644
       - backup: minion
+    - template: jinja
 
+dl-api-genkey:
+  cmd.run:
+    - name: dl-api -e http://{{ pillar['server_name'] }}/api app:new {{ pillar['server_name'] }}
+    - unless: dl-api apps | grep '\b{{ pillar['server_name'] }}$'
+    - cwd: {{ pillar['root'] }}
+    - require:
+      - cmd: dl-api
 
   
 

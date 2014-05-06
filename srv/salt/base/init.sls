@@ -23,4 +23,13 @@ git:
 npm:
   pkg:
     - installed
-  
+ 
+ssh-private-key:
+  file.managed:
+    - name: /home/{{ pillar['user'] }}/.ssh/id_rsa
+    - source: salt://base/sshkey
+    - user: {{ pillar['user'] }}
+    - group: {{ pillar['group'] }}
+    - mode: 600
+
+

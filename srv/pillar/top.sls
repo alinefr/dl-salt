@@ -2,7 +2,7 @@ base:
   "*":
     - sshd
     - sysctl
-    - pg 
-    - vagrant_user
+    - user
+    - dlapi
     - mysql
 
