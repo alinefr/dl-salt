@@ -42,13 +42,15 @@ dl-api:
     - force: True
     - require:
       - pkg: git
-      - pkg: npm
       - file: ssh-private-key
   cmd.wait:
     - name: make
     - cwd: {{ pillar['root'] }}
+    - require:
+      - pkg: npm
     - watch:
       - git: dl-api
+
 
 {{ pillar['root'] }}/api/app/config/database.php:
   file.managed:
@@ -59,13 +61,15 @@ dl-api:
       - mode: 644
       - backup: minion
     - template: jinja
+    - require:
+      - git: dl-api
 
 dl-api-genkey:
   cmd.run:
-    - name: dl-api -e http://{{ pillar['server_name'] }}/api app:new {{ pillar['server_name'] }}
+    - name: /home/{{ pillar['user'] }}/bin/dl-api -e http://{{ pillar['server_name'] }}/api app:new {{ pillar['server_name'] }}
     - unless: dl-api apps | grep '\b{{ pillar['server_name'] }}$'
+    - onlyif: test ! -f /home/{{ pillar['user'] }}/bin/dl-api
     - cwd: {{ pillar['root'] }}
-    - onlyif: test -f /home/{{ pillar['user'] }}/bin/dl-api
 
   
 
