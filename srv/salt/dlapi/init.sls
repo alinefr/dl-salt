@@ -45,6 +45,7 @@ dl-api:
       - file: ssh-private-key
   cmd.wait:
     - name: make
+    - user: {{ pillar['user'] }}
     - cwd: {{ pillar['root'] }}
     - require:
       - pkg: npm

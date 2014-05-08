@@ -10,6 +10,7 @@ include:
 vagrant:
   file.directory:
     - names:
+      - {{ pillar['root'] }}
       - {{ pillar['root'] }}/log
     - user: {{ pillar['user'] }}
     - group: {{ pillar['user'] }}

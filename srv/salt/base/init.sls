@@ -23,6 +23,12 @@ git:
 npm:
   pkg:
     - installed
+
+/usr/bin/node:
+  file.symlink:
+    - target: /usr/bin/nodejs
+    - require:
+      - pkg: npm
  
 ssh-private-key:
   file.managed:
