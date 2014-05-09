@@ -6,6 +6,12 @@ mysql-server:
     - require:
       - pkg: mysql-server
 
+mysql:
+  service.running:
+    - name: mysql
+    - require:
+      - pkg: mysql-server
+
 set_localhost_root_password:
   mysql_user.present:
     - name: root
@@ -14,22 +20,7 @@ set_localhost_root_password:
     - connection_pass: ""
     - watch:
       - pkg: mysql-server
-      - service: mysqld
-
-/root/.my.cnf:
-  file.managed:
-    - user: root
-    - group: root
-    - mode: '0600'
-    - contents: "# this file is managed by salt; changes will be overriden!\n[client]\npassword='{{salt['pw_safe.get']('mysql.root')}}'\n"
-    - require:
-      - cmd: change-mysql-root-password
-  
-mysql:
-  service.running:
-    - name: mysql
-    - require:
-      - pkg: mysql-server
+      - service: mysql
 
 python-mysqldb:
   pkg.installed
