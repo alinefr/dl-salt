@@ -21,7 +21,7 @@ set-mysql-root-password:
     - mode: '0600'
     - contents: "# this file is managed by salt; changes will be overriden!\n[client]\npassword='{{salt['pw_safe.get']('mysql.root')}}'\n"
     - require:
-      - file: /tmp/my.cnf
+      - cmd: set-mysql-root-password
 
 mysql:
   service.running:
