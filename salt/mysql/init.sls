@@ -6,19 +6,15 @@ mysql-server:
     - require:
       - pkg: mysql-server
 
-set-mysql-root-password:
-  cmd.run:
-    - name: 'echo "update user set password=PASSWORD(''{{salt['pw_safe.get']('mysql.root')}}'') where User=''root'';flush privileges;" | /usr/bin/env HOME=/ mysql -uroot mysql'
-    - onlyif: '/usr/bin/env HOME=/ mysqlshow -u root'
-    - require:
-      - service: mysql-server
-
-change-mysql-root-password:
-  cmd.run:
-    - name: 'echo "update user set password=PASSWORD(''{{salt['pw_safe.get']('mysql.root')}}'') where User=''root'';flush privileges;" | mysql -uroot mysql'
-    - onlyif: '(echo | mysql -uroot) && [ -f /root/.my.cnf ] && ! fgrep -q ''{{salt['pw_safe.get']('mysql.root')}}'' /root/.my.cnf'
-    - require:
-      - cmd: set-mysql-root-password
+set_localhost_root_password:
+  mysql_user.present:
+    - name: root
+    - host: localhost
+    - password: {{ pillar['mysql_root_pass'] }}
+    - connection_pass: ""
+    - watch:
+      - pkg: mysql-server
+      - service: mysqld
 
 /root/.my.cnf:
   file.managed:
