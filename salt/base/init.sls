@@ -3,6 +3,7 @@
     - present
   user:
     - present
+    - shell: /bin/bash
     - groups: 
       - {{ pillar['user'] }}
     - require:
