@@ -19,7 +19,7 @@ vagrant:
 vagrant-nginx-available:
   file.managed:
     - name: /etc/nginx/sites-available/{{ pillar['server_name'] }}.conf
-    - source: salt://sites/vagrant.conf
+    - source: salt://sites/template.conf
     - template: jinja
     - watch_in:
       - service: nginx

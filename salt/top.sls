@@ -4,5 +4,5 @@ base:
     - mysql
     - nginx
     - php_fpm
-    - sites.vagrant
+    - sites.template
     - dlapi

@@ -1,3 +1,3 @@
-user: vagrant
-group: vagrant
+user: deploy
+group: deploy
 

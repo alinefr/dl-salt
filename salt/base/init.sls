@@ -1,3 +1,14 @@
+{{ pillar['group'] }}:
+  group.present:
+    - system: False
+
+{{ pillar['user'] }}:
+  user.present:
+    - shell: /bin/bash
+    - home: /home/{{ pillar['user'] }}
+    - groups: 
+      - {{ pillar['group'] }}
+
 /home/{{ pillar['user'] }}/.bashrc:
   file.managed:
     - source:
