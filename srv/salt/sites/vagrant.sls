@@ -11,11 +11,10 @@ vagrant:
   file.directory:
     - names:
       - {{ pillar['root'] }}
-      - {{ pillar['root'] }}/log
     - user: {{ pillar['user'] }}
     - group: {{ pillar['user'] }}
     - makedirs: True
-    - unless: test -d {{ pillar['root'] }}/log
+    - unless: test -d {{ pillar['root'] }}
 
 vagrant-nginx-available:
   file.managed:
