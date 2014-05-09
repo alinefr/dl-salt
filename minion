@@ -1,13 +1,5 @@
 master: localhost
 file_client: local
-file_roots:
-  base:
-    - /srv/dl-salt/salt
-
-pillar_roots:
-  base:
-    - /srv/dl-salt/pillar
-
 mysql.host: 'localhost'
 mysql.port: 3306
 mysql.user: 'root'

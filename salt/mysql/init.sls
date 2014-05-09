@@ -6,21 +6,27 @@ mysql-server:
     - require:
       - pkg: mysql-server
 
+set-mysql-root-password:
+  cmd.run:
+    - name: 'echo "update user set password=PASSWORD(''{{salt['pw_safe.get']('mysql.root')}}'') where User=''root'';flush privileges;" | mysql -uroot mysql'
+    - onlyif: '(echo | mysql -uroot) && [ -f /root/.my.cnf ] && ! fgrep -q ''{{salt['pw_safe.get']('mysql.root')}}'' /root/.my.cnf'
+    - require:
+      - cmd: set-mysql-root-password
+
+/root/.my.cnf:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: '0600'
+    - contents: "# this file is managed by salt; changes will be overriden!\n[client]\npassword='{{salt['pw_safe.get']('mysql.root')}}'\n"
+    - require:
+      - cmd: change-mysql-root-password
+
 mysql:
   service.running:
     - name: mysql
     - require:
       - pkg: mysql-server
-
-set_localhost_root_password:
-  mysql_user.present:
-    - name: root
-    - host: localhost
-    - password: {{ pillar['mysql_root_pass'] }}
-    - connection_pass: ""
-    - watch:
-      - pkg: mysql-server
-      - service: mysql
 
 python-mysqldb:
   pkg.installed
