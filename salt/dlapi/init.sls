@@ -37,7 +37,7 @@ dl-api:
   git.latest:
     - name: git@github.com:doubleleft/dl-api.git
     - rev: master
-    - target: {{ pillar['root'] }}
+    - target: {{ pillar['root'] }}/dl-api
     - user: {{ pillar['user'] }}
     - identity: /home/{{ pillar['user'] }}/.ssh/id_rsa
     - force: True
