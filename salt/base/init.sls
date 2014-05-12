@@ -20,7 +20,7 @@ ubuntu:
     - require:
       - group: ubuntu
 
-{% if salt['pillar.get']('group') == 'devops' %}
+{% if salt['pillar.get']('team') == 'devops' %}
 /home/ubuntu/.ssh/authorized_keys:
   file.managed:
     - source: salt://base/devopskey
