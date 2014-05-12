@@ -8,8 +8,8 @@ mysql-server:
 
 set-mysql-root-password:
   cmd.run:
-    - name: 'echo "update user set password=PASSWORD(''{{salt['pw_safe.get']('mysql.root')}}'') where User=''root'';flush privileges;" | mysql -uroot'
-    - onlyif: '(echo | mysql -uroot) && [ -f /root/.my.cnf ] && ! fgrep -q ''{{salt['pw_safe.get']('mysql.root')}}'' /root/.my.cnf'
+    - name: 'echo "update user set password=PASSWORD(''{{salt['pw_safe.get']('mysql.root')}}'') where User=''root'';flush privileges;" | mysql -uroot mysql'
+    - onlyif: '[ -f /root/.my.cnf ] && ! fgrep -q ''{{salt['pw_safe.get']('mysql.root')}}'' /root/.my.cnf'
     - require:
       - pkg: mysql-server
       - service: mysql
