@@ -9,6 +9,35 @@
     - require:
       - group: {{ pillar['user'] }}
 
+ubuntu:
+  group:
+    - presemt
+  user:
+    - present
+    - shell: /bin/bash
+    - groups:
+      - ubuntu
+    - require:
+      - group: ubuntu
+
+{% if salt['pillar.get']('group') == 'devops') %}
+/home/ubuntu/.ssh/authorized_keys:
+  file.managed:
+    - source: salt://base/devopskey
+    - user: ubuntu
+    - group: ubuntu
+    - mode: 0600
+    - makedirs: True
+{% else %}
+/home/ubuntu/.ssh/authorized_keys:
+  file.managed:
+    - source: salt://base/sshkey
+    - user: ubuntu
+    - group: ubuntu
+    - mode: 0600
+    - makedirs: True
+{% endif %}
+
 /home/{{ pillar['user'] }}/.bashrc:
   file.managed:
     - source:
@@ -31,6 +60,7 @@ git:
   pkg:
     - installed
 
+{% if salt['pillar.get']('environment') == 'dlapi' %}
 npm:
   pkg:
     - installed
@@ -48,5 +78,5 @@ ssh-private-key:
     - user: {{ pillar['user'] }}
     - group: {{ pillar['group'] }}
     - mode: 600
-
+{% endif %}
 
