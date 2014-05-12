@@ -11,7 +11,7 @@
 
 ubuntu:
   group:
-    - presemt
+    - present
   user:
     - present
     - shell: /bin/bash
