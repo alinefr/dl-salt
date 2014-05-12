@@ -7,7 +7,7 @@ include:
   {% set sites_enabled = "/etc/nginx/conf.d" %}
 {% endif%}
 
-vagrant:
+nginx-conf:
   file.directory:
     - names:
       - {{ pillar['root'] }}
@@ -16,7 +16,7 @@ vagrant:
     - makedirs: True
     - unless: test -d {{ pillar['root'] }}
 
-vagrant-nginx-available:
+nginx-conf-available:
   file.managed:
     - name: /etc/nginx/sites-available/{{ salt['pillar.get']('domain_name') }}.conf
     - source: salt://sites/template.conf
@@ -26,7 +26,7 @@ vagrant-nginx-available:
     - defaults:
         ssl: False
 
-vagrant-nginx-enabled:
+nginx-conf-enabled:
   file.symlink:
     - name: {{ sites_enabled }}/{{ salt['pillar.get']('domain_name') }}.conf
     - target: /etc/nginx/sites-available/{{ salt['pillar.get']('domain_name') }}.conf
