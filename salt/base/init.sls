@@ -78,5 +78,10 @@ ssh-private-key:
     - user: {{ pillar['user'] }}
     - group: {{ pillar['group'] }}
     - mode: 600
-{% endif %}
+{% elif salt['pillar.get']('environment') == 'flask' %}
+python-virtualenv:
+  pkg:
+    - installed
+
+
 
