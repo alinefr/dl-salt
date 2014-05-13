@@ -82,6 +82,6 @@ ssh-private-key:
 python-virtualenv:
   pkg:
     - installed
-
+{% endif %}
 
 
