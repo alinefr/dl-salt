@@ -1,0 +1,8 @@
+Command-line arguments:
+
+domain_name
+environment: dlapi|flask
+project_name
+ssl: True
+team: devops
+
