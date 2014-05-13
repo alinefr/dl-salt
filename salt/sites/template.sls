@@ -14,7 +14,7 @@ nginx-conf:
     - user: {{ pillar['user'] }}
     - group: {{ pillar['user'] }}
     - makedirs: True
-    - unless: test -d {{ pillar['root'] }}
+    - unless: test -d {{ pillar['root'] }}/{{ salt['pillar.get']('project_name') }}
 
 nginx-conf-available:
   file.managed:
