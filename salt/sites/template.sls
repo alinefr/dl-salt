@@ -10,7 +10,7 @@ include:
 nginx-conf:
   file.directory:
     - names:
-      - {{ pillar['root'] }}
+      - {{ pillar['root'] }}/{{ salt['pillar.get']('project_name') }}
     - user: {{ pillar['user'] }}
     - group: {{ pillar['user'] }}
     - makedirs: True
