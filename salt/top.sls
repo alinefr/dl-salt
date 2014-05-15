@@ -7,7 +7,7 @@ base:
     {% endif %}
     - php_fpm
     - sites.template
-    {% if salt['pillar.get']('environment') == 'dlapi' %}
+    {% if salt['pillar.get']('setup') == 'dlapi' %}
     - dlapi
     {% endif %}
 

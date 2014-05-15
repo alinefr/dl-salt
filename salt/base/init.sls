@@ -60,7 +60,7 @@ git:
   pkg:
     - installed
 
-{% if salt['pillar.get']('environment') == 'dlapi' %}
+{% if salt['pillar.get']('setup') == 'dlapi' %}
 npm:
   pkg:
     - installed
@@ -78,7 +78,7 @@ ssh-private-key:
     - user: {{ pillar['user'] }}
     - group: {{ pillar['group'] }}
     - mode: 600
-{% elif salt['pillar.get']('environment') == 'flask' %}
+{% elif salt['pillar.get']('setup') == 'flask' %}
 python-virtualenv:
   pkg:
     - installed
