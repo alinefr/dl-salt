@@ -1,22 +1,4 @@
-# This state file is installs and configures the base wordpress environment 
-
-# this is the symlink to the virtual box sync folder WP will live in, the target needs to match 
-# /var/www/html/wordpress:
-#  file.symlink:
-#   - target: /www_src
-
-# This block creates the wordpress database, user and sets user access. 
-# wordpress_db:
-#  mysql_database.present:
-#   - name: wordpress
-#  mysql_user.present:
-#   - name: wordpress
-#   - password: password
-#  mysql_grants.present:
-#   - database: wordpress.*
-#   - grant: ALL PRIVILEGES
-#   - user: wordpress
-#   - host: '%'
+# This state file is installs and configures the dlapi environment 
 
 get-composer:
   cmd.run:
