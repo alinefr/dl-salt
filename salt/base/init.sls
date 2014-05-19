@@ -9,31 +9,37 @@
     - require:
       - group: {{ pillar['user'] }}
 
-ubuntu:
+{% if salt['pillar.get']('sudouser') %}
+  {% set sudouser = salt['pillar.get']('sudouser') %}
+{% else %}
+  {% set sudouser = 'ubuntu' %}
+{% endif %}
+
+{{ sudouser }}:
   group:
     - present
   user:
     - present
     - shell: /bin/bash
     - groups:
-      - ubuntu
+      - {{ sudouser }}
     - require:
-      - group: ubuntu
+      - group: {{ sudouser }}
 
 {% if salt['pillar.get']('team') == 'devops' %}
-/home/ubuntu/.ssh/authorized_keys:
+/home/{{ sudouser }}/.ssh/authorized_keys:
   file.managed:
     - source: salt://base/authorized_keys_devops
-    - user: ubuntu
-    - group: ubuntu
+    - user: {{ sudouser }}
+    - group: {{ sudouser }} 
     - mode: 0600
     - makedirs: True
 {% else %}
-/home/ubuntu/.ssh/authorized_keys:
+/home/{{ sudouser }}/.ssh/authorized_keys:
   file.managed:
     - source: salt://base/authorized_keys
-    - user: ubuntu
-    - group: ubuntu
+    - user: {{ sudouser }}
+    - group: {{ sudouser }}
     - mode: 0600
     - makedirs: True
 {% endif %}
