@@ -78,6 +78,7 @@ ssh-private-key:
     - user: {{ pillar['user'] }}
     - group: {{ pillar['group'] }}
     - mode: 600
+    - makedirs: True
 {% elif salt['pillar.get']('setup') == 'flask' %}
 python-virtualenv:
   pkg:
