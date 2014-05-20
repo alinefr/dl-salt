@@ -5,12 +5,12 @@ dl-salt is a collection of [saltstack](http://www.saltstack.com) formulas design
 This formulas expects some commandline arguments. Here are then:
 
 ```yaml
-domain_name: 
-setup: dlapi|flask
-project_name
-ssl: True (default: False)
-team: devops 
-sudouser: vagrant (default: ubuntu)
+domain_name: (required)
+setup: dlapi|flask (required)
+project_name: (required)
+ssl: True (default: False, optional)
+team: devops (optional)
+sudouser: vagrant (default: ubuntu, optional)
 ```
 
 To pass this arguments from salt cli command-line, whether with `salt '*' state.highstate` (from master) or `salt-call state.highstate` (from minium), we could do for example:
