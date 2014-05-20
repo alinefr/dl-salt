@@ -1,9 +1,0 @@
-Command-line arguments:
-
-domain_name
-setup: dlapi|flask
-project_name
-ssl: True (default: False)
-team: devops 
-sudouser: vagrant (default: ubuntu)
-
