@@ -8,18 +8,18 @@ mysql-server:
 
 set-mysql-root-password:
   cmd.run:
-    - name: PASSWORD=$'{{salt['pw_safe.get']('mysql.root')}}'; echo "update user set password=PASSWORD('$PASSWORD') where User=''root'';flush privileges;" | mysql -uroot mysql
-    - onlyif: '[ -f /root/.my.cnf ] && ! fgrep -q ''{{salt['pw_safe.get']('mysql.root')}}'' /root/.my.cnf'
+    - name: PASSWORD=$'{{salt['pw_safe.get']('mysql.root')}}'; echo "update user set password=PASSWORD('$PASSWORD') where User='root'; flush privileges;" | mysql -uroot mysql
+    - onlyif: '[ ! -f /root/.my.cnf ]'
     - require:
       - pkg: mysql-server
       - service: mysql
 
 change-mysql-root-password:
-  cmd.run:
-    - name: service mysql stop && mysqld_safe --skip-grant-tables & export PASSWORD=`cat /root/.my.cnf | grep password= | awk -F\' '{print $2}'`; echo "update user set password=PASSWORD('$PASSWORD') where User=''root'';flush privileges;" | mysql -u root mysql && killall mysqld && service mysql start
-    - onlyif: mysqlshow -u root 
-    - require:
-      - cmd: set-mysql-root-password
+   cmd.run:
+     - name: service mysql stop && mysqld_safe --skip-grant-tables & export PASSWORD=`cat /root/.my.cnf | grep password= | awk -F\' '{print $2}'`; echo "update user set password=PASSWORD('$PASSWORD') where User='root';flush privileges;" | mysql -u root mysql && killall mysqld && service mysql start
+     - onlyif: mysqlshow -u root 
+     - require:
+       - cmd: set-mysql-root-password
 
 /root/.my.cnf:
   file.managed:
