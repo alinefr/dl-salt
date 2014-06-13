@@ -35,6 +35,12 @@ dl-api:
     - watch:
       - git: dl-api
 
+{{ pillar['root'] }}/{{ pillar['project_name'] }}/api/app/storage:
+  file.directory:
+    - user: deploy
+    - group: www-data
+    - mode: 775
+    - makedirs: True
 
 {{ pillar['root'] }}/{{ pillar['project_name'] }}/api/app/config/database.php:
   file.managed:

@@ -1,13 +1,15 @@
 base:
   '*':
     - base
-    - mysql
     {% if salt['pillar.get']('dbdriver') == 'mysql' %}
-    - nginx
+    - mysql
     {% endif %}
+    - nginx
     - php_fpm
     - sites.template
     {% if salt['pillar.get']('setup') == 'dlapi' %}
     - dlapi
+    {% elif salt['pillar.get']('setup') == 'rails' %}
+    - rvm
     {% endif %}
 
