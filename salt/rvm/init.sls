@@ -59,3 +59,8 @@ mygemset:
     - require:
       - rvm: ruby-2.0.0
 
+unicorn:
+  gem.installed:
+    - runas: {{ pillar['user'] }}
+    - ruby: 2.0.0@mygemset
+
