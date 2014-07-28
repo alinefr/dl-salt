@@ -1,10 +1,14 @@
 Vagrant.configure("2") do |config|
-	config.vm.box = "saucy64"
+	config.vm.box = "trusty64"
 	config.vm.synced_folder "salt/", "/srv/salt"
 	config.vm.synced_folder "pillar/", "/srv/pillar"
 	config.vm.provision :salt do |salt|
 		salt.minion_config = "minion"
 		salt.run_highstate = false
+    end
+
+    config.vm.provision :shell do |shell|
+        shell.inline = "salt-call state.highstate pillar='{domain_name: localhost, setup: rails, project_name: railstest, sudouser: vagrant}'"
 	end
 end
 
