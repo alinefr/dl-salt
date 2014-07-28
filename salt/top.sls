@@ -4,10 +4,10 @@ base:
     {% if salt['pillar.get']('dbdriver') == 'mysql' %}
     - mysql
     {% endif %}
-    {% if not ( salt['pillar.get']('setup') == 'ddll' or salt['pillar.get']('setup') == 'staging' ) %}
+    {% if not ( salt['pillar.get']('environment') == 'ddll' or salt['pillar.get']('environment') == 'staging' ) %}
     - nginx
-    - php_fpm
     - sites.template
+    - php_fpm
     {% endif %}
     {% if salt['pillar.get']('setup') == 'dlapi' %}
     - dlapi
