@@ -79,12 +79,10 @@ npm:
   pkg:
     - installed
 
-/usr/bin/node:
-  file.symlink:
-    - target: /usr/bin/nodejs
-    - require:
-      - pkg: npm
- 
+nodejs-legacy:
+  pkg:
+    - installed
+
 ssh-private-key:
   file.managed:
     - name: /home/{{ pillar['user'] }}/.ssh/id_rsa
