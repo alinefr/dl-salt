@@ -1,13 +1,21 @@
-{{ pillar['user'] }}:
+{% if ( grains['host'] == 'ddll' %}
+  {% set user = 'deploy' %}
+{% elif ( grains['host'] == 'staging' %}
+  {% set user = 'staging' %}
+{% else %}
+  {% set user = pillar['user'] %}
+{% endif %}
+
+{{ user }}:
   group:
     - present
   user:
     - present
     - shell: /bin/bash
     - groups: 
-      - {{ pillar['user'] }}
+      - {{ user }}
     - require:
-      - group: {{ pillar['user'] }}
+      - group: {{ user }}
 
 {% if salt['pillar.get']('sudouser') %}
   {% set sudouser = salt['pillar.get']('sudouser') %}
@@ -52,12 +60,12 @@
     - makedirs: True
 {% endif %}
 
-/home/{{ pillar['user'] }}/.bashrc:
+/home/{{ user }}/.bashrc:
   file.managed:
     - source:
       - salt://base/dot_bashrc
-    - user: {{ pillar['user'] }}
-    - group: {{ pillar['group'] }}
+    - user: {{ user }}
+    - group: {{ user }}
     - mode: 644
     - backup: minion
 
@@ -85,10 +93,10 @@ nodejs-legacy:
 
 ssh-private-key:
   file.managed:
-    - name: /home/{{ pillar['user'] }}/.ssh/id_rsa
+    - name: /home/{{ user }}/.ssh/id_rsa
     - source: salt://base/sshkey
-    - user: {{ pillar['user'] }}
-    - group: {{ pillar['group'] }}
+    - user: {{ user }}
+    - group: {{ user }}
     - mode: 600
     - makedirs: True
 {% elif salt['pillar.get']('setup') == 'flask' %}
