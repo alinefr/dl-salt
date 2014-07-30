@@ -1,5 +1,9 @@
 {% if ( grains['host'] == 'ddll' %}
   {% set user = 'deploy' %}
+hello:
+  pkg:
+    - installed
+
 {% elif ( grains['host'] == 'staging' %}
   {% set user = 'staging' %}
 {% else %}
