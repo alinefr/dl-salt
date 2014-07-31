@@ -4,7 +4,7 @@ base:
     {% if salt['pillar.get']('dbdriver') == 'mysql' %}
     - mysql
     {% endif %}
-    {% if ( grains['host'] != 'ddll' or grains['host'] != 'staging' ) %}
+    {% if not ( grains['host'] == 'ddll' or grains['host'] == 'staging' ) %}
     - nginx
     - sites.template
     - php_fpm
