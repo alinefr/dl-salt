@@ -18,21 +18,21 @@ python-mysqldb:
 
 dbconfig:
   mysql_user.present:
-    - name: {{ salt['pillar.get']('db_user') }}
-    - password: {{ salt['pillar.get']('db_pass') }}
+    - name: {{ salt['pillar.get']('dbuser') }}
+    - password: {{ salt['pillar.get']('dbpass') }}
     - require:
       - service: mysql
       - pkg: python-mysqldb
 
   mysql_database.present:
-    - name: {{ salt['pillar.get']('db_name') }}
+    - name: {{ salt['pillar.get']('dbname') }}
     - require:
       - mysql_user: dbconfig
 
   mysql_grants.present:
     - grant: all privileges
-    - database: {{ salt['pillar.get']('db_name') }}.*
-    - user: {{ salt['pillar.get']('db_user') }}
+    - database: {{ salt['pillar.get']('dbname') }}.*
+    - user: {{ salt['pillar.get']('dbuser') }}
     - require:
       - mysql_database: dbconfig 
 
