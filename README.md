@@ -11,6 +11,10 @@ project_name: (required)
 ssl: True (default: False, optional)
 team: devops (optional)
 sudouser: vagrant (default: ubuntu, optional)
+# Database setup. For now mysql only.
+db_user:
+db_pass:
+db_name:
 ```
 
 To pass this arguments from salt cli command-line, whether with `salt '*' state.highstate` (from master) or `salt-call state.highstate` (from minium), we could do for example:

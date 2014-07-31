@@ -1,3 +1,42 @@
+{% if ( grains['host'] == 'ddll' or grains['host'] == 'staging' ) %}
+mysql-server:
+  pkg.installed: []
+  service.running:
+    - name: mysql
+    - enable: True
+    - require:
+      - pkg: mysql-server
+
+mysql:
+  service.running:
+    - name: mysql
+    - require:
+      - pkg: mysql-server
+
+python-mysqldb:
+  pkg.installed
+
+dbconfig:
+  mysql_user.present:
+    - name: {{ salt['pillar.get']('db_user') }}
+    - password: {{ salt['pillar.get']('db_pass') }}
+    - require:
+      - service: mysql
+      - pkg: python-mysqldb
+
+  mysql_database.present:
+    - name: {{ salt['pillar.get']('db_name') }}
+    - require:
+      - mysql_user: dbconfig
+
+  mysql_grants.present:
+    - grant: all privileges
+    - database: {{ salt['pillar.get']('db_name') }}.*
+    - user: {{ salt['pillar.get']('db_user') }}
+    - require:
+      - mysql_database: dbconfig 
+
+{% else %}
 mysql-server:
   pkg.installed: []
   service.running:
@@ -59,3 +98,4 @@ dbconfig:
     - require:
       - mysql_database: dbconfig 
 
+{% endif %}

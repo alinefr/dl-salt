@@ -13,5 +13,8 @@ base:
     - dlapi
     {% elif salt['pillar.get']('setup') == 'rails' %}
     - rvm
+    {% elif salt['pillar.get']('setup) == 'wordpredd' %}
+    - wordpress
     {% endif %}
+
 
