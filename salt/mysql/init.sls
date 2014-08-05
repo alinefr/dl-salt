@@ -1,4 +1,3 @@
-{% if ( grains['host'] == 'ddll' or grains['host'] == 'staging' ) %}
 mysql-server:
   pkg.installed: []
   service.running:
@@ -7,44 +6,7 @@ mysql-server:
     - require:
       - pkg: mysql-server
 
-mysql:
-  service.running:
-    - name: mysql
-    - require:
-      - pkg: mysql-server
-
-python-mysqldb:
-  pkg.installed
-
-dbconfig:
-  mysql_user.present:
-    - name: {{ salt['pillar.get']('dbuser') }}
-    - password: {{ salt['pillar.get']('dbpass') }}
-    - require:
-      - service: mysql
-      - pkg: python-mysqldb
-
-  mysql_database.present:
-    - name: {{ salt['pillar.get']('dbname') }}
-    - require:
-      - mysql_user: dbconfig
-
-  mysql_grants.present:
-    - grant: all privileges
-    - database: {{ salt['pillar.get']('dbname') }}.*
-    - user: {{ salt['pillar.get']('dbuser') }}
-    - require:
-      - mysql_database: dbconfig 
-
-{% else %}
-mysql-server:
-  pkg.installed: []
-  service.running:
-    - name: mysql
-    - enable: True
-    - require:
-      - pkg: mysql-server
-
+{% if ( grains['host'] != 'ddll' or grains['host'] != 'staging' ) %}
 set-mysql-root-password:
   cmd.run:
     - name: PASSWORD=$'{{salt['pw_safe.get']('mysql.root')}}'; echo "update user set password=PASSWORD('$PASSWORD') where User='root'; flush privileges;" | mysql -uroot mysql
@@ -68,6 +30,7 @@ change-mysql-root-password:
     - contents: "# this file is managed by salt; changes will be overriden!\n[client]\npassword='{{salt['pw_safe.get']('mysql.root')}}'\n"
     - require:
       - cmd: set-mysql-root-password
+{% endif %}
 
 mysql:
   service.running:
@@ -98,4 +61,3 @@ dbconfig:
     - require:
       - mysql_database: dbconfig 
 
-{% endif %}
