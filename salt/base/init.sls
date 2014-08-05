@@ -6,6 +6,10 @@ hello:
 
 {% elif grains['host'] == 'staging' %}
   {% set user = 'staging' %}
+hello:
+pkg:
+  - installed
+
 {% else %}
   {% set user = pillar['user'] %}
 {% endif %}
