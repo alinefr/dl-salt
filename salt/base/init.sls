@@ -4,7 +4,7 @@ hello:
   pkg:
     - installed
 
-{{ salt['pillar.get']('project_path')/myfile.txt }}
+{{ salt['pillar.get']('project_path') }}/myfile.txt:
   file.managed:
     - user = {{ user }}
     - group = {{ user }}
