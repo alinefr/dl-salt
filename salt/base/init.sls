@@ -6,8 +6,8 @@ hello:
 
 {{ salt['pillar.get']('project_path') }}/myfile.txt:
   file.managed:
-    - user = {{ user }}
-    - group = {{ user }}
+    - user: {{ user }}
+    - group: {{ user }}
     - contents: "this is inside salt['pillar.get']('project_path')"
 
 {% elif grains['host'] == 'staging' %}
