@@ -8,6 +8,7 @@ This formulas expects some commandline arguments. Here are then:
 domain_name: (required)
 setup: dlapi|flask (required)
 project_name: (required)
+project_path: (default: /srv/www/<project>, optional)
 ssl: True (default: False, optional)
 team: devops (optional)
 sudouser: vagrant (default: ubuntu, optional)

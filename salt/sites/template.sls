@@ -1,3 +1,9 @@
+{% if salt['pillar.get']('project_path') is defined %}
+    root = salt['pillar.get']('project_path')
+{% else %}
+    root = {{ pillar['root'] }}/{{ salt['pillar.get']('project_name') }}
+{% endif %}
+
 include:
   - nginx
 
@@ -10,11 +16,11 @@ include:
 nginx-conf:
   file.directory:
     - names:
-      - {{ pillar['root'] }}/{{ salt['pillar.get']('project_name') }}
+      - {{ root }}
     - user: {{ pillar['user'] }}
     - group: {{ pillar['user'] }}
     - makedirs: True
-    - unless: test -d {{ pillar['root'] }}/{{ salt['pillar.get']('project_name') }}
+    - unless: test -d {{ root }}
 
 nginx-conf-available:
   file.managed:
