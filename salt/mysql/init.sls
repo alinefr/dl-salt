@@ -61,7 +61,7 @@ dbconfig:
     - require:
       - mysql_database: dbconfig 
 
-{% if salt['pillar.get']('project_path') }} is defined %}
+{% if salt['pillar.get']('project_path') is defined %}
   {% set dbdata = salt['pillar.get']('project_path') }}/.dbdata %}
 {% endif %}
 
