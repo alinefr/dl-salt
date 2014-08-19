@@ -1,13 +1,9 @@
 base:
-  '*':
+  dev:
+    - match: nodegroup
     - base
     {% if salt['pillar.get']('dbdriver') == 'mysql' %}
     - mysql
-    {% endif %}
-    {% if not ( grains['host'] == 'ddll' or grains['host'] == 'staging' ) %}
-    - nginx
-    - sites.template
-    - php_fpm
     {% endif %}
     {% if salt['pillar.get']('setup') == 'dlapi' %}
     - dlapi
@@ -16,5 +12,4 @@ base:
     {% elif salt['pillar.get']('setup') == 'wordpress' %}
     - wordpress
     {% endif %}
-
 

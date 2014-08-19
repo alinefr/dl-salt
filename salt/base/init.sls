@@ -1,7 +1,5 @@
-{% if grains['host'] == 'ddll' %}
-  {% set user = 'deploy' %}
-{% elif grains['host'] == 'staging' %}
-  {% set user = 'staging' %}
+{% if salt['pillar.get']('deploy_username') is defined %}
+  {% set user = salt['pillar.get']('deploy_username') %}
 {% else %}
   {% set user = pillar['user'] %}
 {% endif %}
@@ -17,7 +15,7 @@
     - require:
       - group: {{ user }}
 
-{% if salt['pillar.get']('sudouser') %}
+{% if salt['pillar.get']('sudouser') is defined %}
   {% set sudouser = salt['pillar.get']('sudouser') %}
 {% else %}
   {% set sudouser = 'ubuntu' %}
