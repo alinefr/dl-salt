@@ -61,11 +61,7 @@ dbconfig:
     - require:
       - mysql_database: dbconfig 
 
-{% if salt['pillar.get']('project_path') is defined %}
-  {% set dbdata = salt['pillar.get']('project_path') }}/.dbdata %}
-{% endif %}
-
-{{ dbdata }}:
+{{ salt['pillar.get']('project_path')/.dbdata }}:
   file.managed:
     - user: ubuntu
     - group: ubuntu
