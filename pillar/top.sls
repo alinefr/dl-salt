@@ -1,9 +1,9 @@
 base:
-  "*":
-    - sshd
-    - sysctl
-    - user
-    - nginx
-    - dlapi
-    - mysql
+  'ddll.co:
+    - ddll
+
+  'staging.ws:
+    - staging
+
+
 
