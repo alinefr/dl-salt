@@ -1,21 +1,7 @@
 {% if grains['host'] == 'ddll' %}
   {% set user = 'deploy' %}
-hello:
-  pkg:
-    - installed
-
-{{ salt['pillar.get']('project_path') }}/myfile.txt:
-  file.managed:
-    - user: {{ user }}
-    - group: {{ user }}
-    - contents: "This is the content for '{{salt['pillar.get']('project_path')}}'\n"
-
 {% elif grains['host'] == 'staging' %}
   {% set user = 'staging' %}
-hello:
-pkg:
-  - installed
-
 {% else %}
   {% set user = pillar['user'] %}
 {% endif %}
