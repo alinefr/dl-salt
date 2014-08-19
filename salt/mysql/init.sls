@@ -61,3 +61,14 @@ dbconfig:
     - require:
       - mysql_database: dbconfig 
 
+{% if salt['pillar.get']('project_path') }} is defined %}
+  {% set dbdata = salt['pillar.get']('project_path') }}/.dbdata %}
+{% endif %}
+
+{{ dbdata }}:
+  file.managed:
+    - user: ubuntu
+    - group: ubuntu
+    - mode: 0600
+    - contents: "# this file is managed by salt; changes will be overriden!\nuser: '{{salt['pillar.get']('dbuser')}}'\npassword: '{{salt['pillar.get']('dbpass')}}'\ndatabase: '{{salt['pillar.get']('dbname')}}'\n"
+
