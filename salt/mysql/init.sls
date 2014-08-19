@@ -61,7 +61,7 @@ dbconfig:
     - require:
       - mysql_database: dbconfig 
 
-{{ salt['pillar.get']('project_path')/.dbdata }}:
+{{ salt['pillar.get']('project_path')}}/.dbdata:
   file.managed:
     - user: ubuntu
     - group: ubuntu
