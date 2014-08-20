@@ -1,8 +1,4 @@
-{% if salt['pillar.get']('project_path') is defined %}
-    root = salt['pillar.get']('project_path')
-{% else %}
-    root = {{ pillar['root'] }}/{{ salt['pillar.get']('project_name') }}
-{% endif %}
+{% set root = salt['pillar.get']('project_path','/srv/www') %}
 
 include:
   - nginx

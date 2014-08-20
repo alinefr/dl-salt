@@ -6,6 +6,7 @@ base:
     - mysql
     {% endif %}
     - nginx
+    - sites
     {% if salt['pillar.get']('setup') == 'dlapi' %}
     - dlapi
     {% elif salt['pillar.get']('setup') == 'rails' %}
