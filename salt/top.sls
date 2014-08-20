@@ -1,5 +1,5 @@
 base:
-  dev:
+  'dev':
     - match: nodegroup
     - base
     {% if salt['pillar.get']('dbdriver') == 'mysql' %}
