@@ -1,5 +1,5 @@
-{% if salt['pillar.get']('deploy_username') is defined %}
-  {% set user = salt['pillar.get']('deploy_username') %}
+{% if salt['pillar.get']('project_username') is defined %}
+  {% set user = salt['pillar.get']('project_username') %}
 {% else %}
   {% set user = pillar['user'] %}
 {% endif %}

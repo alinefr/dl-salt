@@ -8,6 +8,7 @@ This formulas expects some commandline arguments. Here are then:
 domain_name: (required)
 setup: dlapi|flask (required)
 project_name: (required)
+project_username: (required)
 project_path: (default: /srv/www/<project>, optional)
 project_port: (default: absent, optional)
 ssl: True (default: False, optional)
