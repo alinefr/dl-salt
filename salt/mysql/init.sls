@@ -1,3 +1,5 @@
+{% set user = salt['pillar.get']('project_username','deploy') %}
+
 mysql-server:
   pkg.installed: []
   service.running:
@@ -63,8 +65,8 @@ dbconfig:
 
 {{ salt['pillar.get']('project_path')}}/.dbdata:
   file.managed:
-    - user: deploy
-    - group: deploy
+    - user: {{ user }}
+    - group: {{ user }}
     - mode: 0600
     - contents: "# this file is managed by salt; changes will be overriden!\nuser: {{salt['pillar.get']('dbuser')}}\npassword: {{salt['pillar.get']('dbpass')}}\ndatabase: {{salt['pillar.get']('dbname')}}\n"
 
