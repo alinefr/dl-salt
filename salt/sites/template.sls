@@ -21,7 +21,7 @@ nginx-conf:
 nginx-conf-available:
   file.managed:
     - name: /etc/nginx/sites-available/{{ salt['pillar.get']('project_name') }}.conf
-    - source: salt://sites/template.conf
+    - source: salt://sites/template_common.conf
     - template: jinja
     - watch_in:
       - service: nginx
