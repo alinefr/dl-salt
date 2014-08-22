@@ -7,7 +7,7 @@ base:
     {% endif %}
     - nginx
     - sites.template
-    {% if salt['pillar.get]('build','disabled') == 'brunch' %}
+    {% if salt['pillar.get']('build','disabled') == 'brunch' %}
     - rvm
     {% endif %}
     {% if salt['pillar.get']('setup') == 'dlapi' %}
