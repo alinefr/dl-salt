@@ -63,7 +63,7 @@ ruby-2.0.0:
       - rvm: ruby-2.0.0
 
 bundle-install:
-  cmd.wait:
+  cmd.run:
     - name: bundle install
     - cwd: {{ root }}
     - runas: {{ user }}
