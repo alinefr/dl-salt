@@ -1,4 +1,5 @@
 {% set user = salt['pillar.get']('project_username','deploy') %}
+{% set root = salt['pillar.get']('project_path','/srv/www') %}
 
 rvm-deps:
   pkg:
@@ -61,8 +62,12 @@ ruby-2.0.0:
     - require:
       - rvm: ruby-2.0.0
 
-unicorn:
-  gem.installed:
+bundle-install:
+  cmd.wait:
+    - name: bundle install
+    - cwd: {{ root }}
     - runas: {{ user }}
     - ruby: 2.0.0@{{ salt['pillar.get']('project_name') }}
+    - watch: 
+      - rvm: {{ salt['pillar.get']('project_name') }}
 
