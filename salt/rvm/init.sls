@@ -64,7 +64,7 @@ ruby-2.0.0:
 
 bundle-install:
   cmd.run:
-    - name: rvm 2.0.0@{{ salt['pillar.get']('project_name') }} exec bundle install
+    - name: "source ~{{ user }}/.rvm/scripts/rvm; rvm 2.0.0@{{ salt['pillar.get']('project_name') }} exec bundle install"
     - cwd: {{ root }}
     - runas: {{ user }}
     - require: 
