@@ -7,6 +7,7 @@ This formulas expects some commandline arguments. Here are then:
 ```yaml
 domain_name: (required)
 setup: dlapi|flask (required)
+build: brunch (default: disabled, optional)
 project_name: (required)
 project_username: (required)
 project_path: (default: /srv/www/<project>, optional)

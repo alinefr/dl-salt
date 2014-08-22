@@ -1,3 +1,5 @@
+{% set user = salt['pillar.get']('project_username','deploy') %}
+
 rvm-deps:
   pkg:
     - installed
@@ -45,22 +47,22 @@ ruby-2.0.0:
   rvm:
     - installed
     - default: True
-    - runas: {{ pillar['user'] }}
+    - runas: {{ user }}
     - require:
       - pkg: rvm-deps
       - pkg: mri-deps
-      - user: {{ pillar['user'] }}
+      - user: {{ user }}
 
 mygemset:
   rvm:
     - gemset_present
     - ruby: ruby-2.0.0
-    - runas: {{ pillar['user'] }}
+    - runas: {{ user }}
     - require:
       - rvm: ruby-2.0.0
 
 unicorn:
   gem.installed:
-    - runas: {{ pillar['user'] }}
-    - ruby: 2.0.0@mygemset
+    - runas: {{ user }}
+    - ruby: 2.0.0@{{ salt['pillar.get']('project_name') }}
 
