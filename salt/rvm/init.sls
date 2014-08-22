@@ -68,6 +68,6 @@ bundle-install:
     - cwd: {{ root }}
     - runas: {{ user }}
     - ruby: 2.0.0@{{ salt['pillar.get']('project_name') }}
-    - watch: 
+    - require: 
       - rvm: {{ salt['pillar.get']('project_name') }}
 
