@@ -53,7 +53,7 @@ ruby-2.0.0:
       - pkg: mri-deps
       - user: {{ user }}
 
-mygemset:
+{{ salt['pillar.get']('project_name') }}:
   rvm:
     - gemset_present
     - ruby: ruby-2.0.0
