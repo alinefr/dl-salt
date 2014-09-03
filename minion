@@ -1,3 +1,6 @@
+nodegroups:
+  dev: 'L@vagrant-base-trusty-amd64'
+
 master: localhost
 file_client: local
 mysql.host: 'localhost'

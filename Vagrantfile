@@ -1,5 +1,5 @@
 Vagrant.configure("2") do |config|
-	config.vm.box = "trusty64"
+	config.vm.box = "fgrehm/trusty64-lxc"
 	config.vm.synced_folder "salt/", "/srv/salt"
 	config.vm.synced_folder "pillar/", "/srv/pillar"
 	config.vm.provision :salt do |salt|
