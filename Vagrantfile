@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
     end
 
     config.vm.provision :shell do |shell|
-        shell.inline = "salt-call state.highstate pillar='{domain_name: localhost, setup: rails, project_name: railstest, sudouser: vagrant}'"
+        shell.inline = "salt-call state.highstate pillar='{domain_name: localhost, setup: static, build: brunch, ssl: False, project_name: test, sudouser: vagrant, project_path: /srv/www, project_port: 80, dbdriver: disabled}'"
 	end
 end
 
