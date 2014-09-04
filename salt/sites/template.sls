@@ -1,4 +1,5 @@
 {% set root = salt['pillar.get']('project_path','/srv/www') %}
+{% set user = salt['pillar.get']('project_username','deploy') %}
 
 include:
   - nginx
@@ -13,8 +14,8 @@ nginx-conf:
   file.directory:
     - names:
       - {{ root }}
-    - user: {{ pillar['user'] }}
-    - group: {{ pillar['user'] }}
+    - user: {{ user }}
+    - group: {{ user }}
     - makedirs: True
     - unless: test -d {{ root }}
 
