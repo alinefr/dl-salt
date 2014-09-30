@@ -1,4 +1,8 @@
 {% set user = salt['pillar.get']('project_username','deploy') %}
+{% set proj_name = salt['pillar.get']('proj_name','myproject') %}
+{% set root = salt['pillar.get']('project_path','/vagrant') %}
+{% set mysql_user = salt['cmd.run']('echo ${' ~ proj_name ~ '//-/}') %}
+{% set mysql_db = mysql_user %}
 
 mysql-server:
   pkg.installed: []
@@ -9,29 +13,13 @@ mysql-server:
       - pkg: mysql-server
 
 {% if ( grains['host'] != 'ddll' or grains['host'] != 'staging' ) %}
-set-mysql-root-password:
-  cmd.run:
-    - name: PASSWORD=$'{{salt['pw_safe.get']('mysql.root')}}'; echo "update user set password=PASSWORD('$PASSWORD') where User='root'; flush privileges;" | mysql -uroot mysql
-    - onlyif: '[ ! -f /root/.my.cnf ]'
+set-root-password:
+  mysql_user.present:
+    - name: root
+    - password: {{ salt['grains.get_or_set_hash']('mysql:root') }}
     - require:
       - pkg: mysql-server
       - service: mysql
-
-change-mysql-root-password:
-   cmd.run:
-     - name: service mysql stop && mysqld_safe --skip-grant-tables & export PASSWORD=`cat /root/.my.cnf | grep password= | awk -F\' '{print $2}'`; echo "update user set password=PASSWORD('$PASSWORD') where User='root';flush privileges;" | mysql -u root mysql && killall mysqld && service mysql start
-     - onlyif: mysqlshow -u root 
-     - require:
-       - cmd: set-mysql-root-password
-
-/root/.my.cnf:
-  file.managed:
-    - user: root
-    - group: root
-    - mode: '0600'
-    - contents: "# this file is managed by salt; changes will be overriden!\n[client]\npassword='{{salt['pw_safe.get']('mysql.root')}}'\n"
-    - require:
-      - cmd: set-mysql-root-password
 {% endif %}
 
 mysql:
@@ -45,28 +33,20 @@ python-mysqldb:
 
 dbconfig:
   mysql_user.present:
-    - name: {{ pillar['mysql_user'] }}
-    - password: {{ pillar['mysql_pass'] }}
+    - name: {{ mysql_user }}
+    - password: {{ salt['grains.get_or_set_hash']('mysql:' ~ mysql_user ~ '') }}
     - require:
       - service: mysql
       - pkg: python-mysqldb
 
   mysql_database.present:
-    - name: {{ pillar['mysql_db'] }}
+    - name: {{ mysql_db }}
     - require:
       - mysql_user: dbconfig
 
   mysql_grants.present:
     - grant: all privileges
-    - database: {{ pillar['mysql_db'] }}.*
-    - user: {{ pillar['mysql_user'] }}
+    - database: {{ mysql_db }}.*
+    - user: {{ mysql_user }}
     - require:
       - mysql_database: dbconfig 
-
-{{ salt['pillar.get']('project_path')}}/.dbdata:
-  file.managed:
-    - user: {{ user }}
-    - group: {{ user }}
-    - mode: 0600
-    - contents: "# this file is managed by salt; changes will be overriden!\nuser: {{salt['pillar.get']('dbuser')}}\npassword: {{salt['pillar.get']('dbpass')}}\ndatabase: {{salt['pillar.get']('dbname')}}\n"
-
