@@ -1,6 +1,6 @@
-{% set root = salt['pillar.get']('project_path','/vagrant') %}
+{% set www_root = salt['pillar.get']('project_path','/vagrant') %}
 {% set user = salt['pillar.get']('project_username','vagrant') %}
-{% set proj_name = salt['pillar.get']('projname','myproject') %}
+{% set proj_name = salt['pillar.get']('proj_name','myproject') %}
 
 include:
   - nginx
@@ -14,16 +14,16 @@ include:
 nginx-conf:
   file.directory:
     - names:
-      - {{ root }}
+      - {{ www_root }}
     - user: {{ user }}
     - group: {{ user }}
     - makedirs: True
-    - unless: test -d {{ root }}
+    - unless: test -d {{ www_root }}
 
 nginx-conf-available:
   file.managed:
     - name: /etc/nginx/sites-available/{{ proj_name }}.conf
-    - source: salt://sites/template_common.conf
+    - source: salt://sites/template.conf
     - template: jinja
     - watch_in:
       - service: nginx
