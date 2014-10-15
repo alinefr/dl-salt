@@ -25,7 +25,7 @@ include:
 unicorn-wrapper:
   module.run:
     - name: rvm.wrapper
-    - ruby_string: 2.0.0@google-googlelab
+    - ruby_string: 2.0.0@{{ proj_name }}
     - wrapper_prefix: system
     - binaries: [unicorn_rails]
     - runas: deploy
