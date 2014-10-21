@@ -30,42 +30,7 @@
     - user: {{ user }}
     - group: {{ user }}
     - mode: 644
-    - backup: minion
-
-/usr/lib/python2.7/dist-packages/salt/modules/mysql.py:
-  file.managed:
-    - source:
-      - salt://base/mysql.py
-    - user: root
-    - group: root
-    - mode: 644
-    - backup: minion
 
 git:
-  pkg:
-    - installed
-
-{% if salt['pillar.get']('setup') == 'dlapi' %}
-npm:
-  pkg:
-    - installed
-
-nodejs-legacy:
-  pkg:
-    - installed
-
-ssh-private-key:
-  file.managed:
-    - name: /home/{{ user }}/.ssh/id_rsa
-    - source: salt://base/sshkey
-    - user: {{ user }}
-    - group: {{ user }}
-    - mode: 600
-    - makedirs: True
-{% elif salt['pillar.get']('setup') == 'flask' %}
-python-virtualenv:
-  pkg:
-    - installed
-{% endif %}
-
+  pkg.installed
 
