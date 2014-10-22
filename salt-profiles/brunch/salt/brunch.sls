@@ -36,17 +36,22 @@ bower:
       - npm: npm-install
 
 bower-install:
-  cmd.run:
-    - name: "source ~{{ user }}/.rvm/scripts/rvm; rvm 2.0.0@{{ proj_name }} exec bundle exec {{ www_root }}/node_modules/.bin/bower install"
+  module.run:
+    - name: rvm.do
+    - ruby: 2.0.0@{{ proj_name }}
+    - command: {{ www_root }}/node_modules/.bin/bower install
+    - runas: {{ user }}
     - cwd: {{ www_root }}
-    - user: {{ user }}
-    - require: 
+    - require:
       - npm: npm-install
 
 brunch-exec:
-  cmd.run:
-    - name: "source ~{{ user }}/.rvm/scripts/rvm; rvm 2.0.0@{{ proj_name }} exec bundle exec {{ www_root }}/node_modules/.bin/brunch build {{ build_target }}"
+  module.run:
+    - name: rvm.do
+    - ruby: 2.0.0@{{ proj_name }}
+    - command: {{ www_root }}/node_modules/.bin/brunch build {{ build_target }}
+    - runas: {{ user }}
     - cwd: {{ www_root }}
-    - user: {{ user }}
-    - require:
-      - cmd: bower-install
+    - require: 
+      - npm: npm-install
+
