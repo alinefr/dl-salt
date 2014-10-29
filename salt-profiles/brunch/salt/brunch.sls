@@ -39,7 +39,7 @@ bower-install:
   module.run:
     - name: rvm.do
     - ruby: 2.0.0@{{ proj_name }}
-    - command: {{ www_root }}/node_modules/.bin/bower install
+    - command: {{ www_root }}/node_modules/.bin/bower install --config.interactive=false
     - runas: {{ user }}
     - cwd: {{ www_root }}
     - require:
