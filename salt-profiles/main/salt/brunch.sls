@@ -2,6 +2,14 @@
 {% set user_home = salt['user.info'](user).home %}
 {% set www_root = salt['pillar.get']('project_path','/vagrant') %}
 {% set proj_name = salt['pillar.get']('proj_name','myproject') %}
+{% set rubygems = salt['pillar.get']('rubygems',False) %}
+{% if rubygems == True %}
+  {% set pre_arg = '' ~ user_home ~ '/.rvm/bin/rvm 2.0.0@' ~ proj_name ~ ' do' %}
+  include:
+    - rvm
+{% else %}
+  {% set pre_arg = '' %}
+{% endif %}
 {% if grains['host'] in ['ddll','staging','gateway'] %}
   {% set build_target = '--production' %}
 {% else %}
@@ -38,7 +46,7 @@ bower:
 
 bower-install:
   cmd.run:
-    - name: {{ user_home }}/.rvm/bin/rvm 2.0.0@{{ proj_name }} do {{ www_root }}/node_modules/.bin/bower install --config.interactive=false
+    - name: {{ pre_arg }} {{ www_root }}/node_modules/.bin/bower install --config.interactive=false
     - cwd: {{ www_root }}
     - user: {{ user }}
     - require:
@@ -47,7 +55,7 @@ bower-install:
 
 brunch-exec:
   cmd.run:
-    - name: {{ user_home }}/.rvm/bin/rvm 2.0.0@{{ proj_name }} do {{ www_root }}/node_modules/.bin/brunch build {{ build_target }}
+    - name: {{ pre_arg }} {{ www_root }}/node_modules/.bin/brunch build {{ build_target }}
     - cwd: {{ www_root }}
     - user: {{ user }}
     - require: 

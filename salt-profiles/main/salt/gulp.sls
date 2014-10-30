@@ -1,6 +1,15 @@
 {% set user = salt['pillar.get']('project_username','vagrant') %}
+{% set user_home = salt['user.info'](user).home %}
 {% set www_root = salt['pillar.get']('project_path','/vagrant') %}
 {% set proj_name = salt['pillar.get']('proj_name','myproject') %}
+{% set rubygems = salt['pillar.get']('rubygems',False) %}
+{% if rubygems == True %}
+  {% set pre_arg = '' ~ user_home ~ '/.rvm/bin/rvm 2.0.0@' ~ proj_name ~ ' do' %}
+  include:
+    - rvm
+{% else %}
+  {% set pre_arg = '' %}
+{% endif %}
 
 npm-deps:
   pkg.installed:
@@ -23,7 +32,7 @@ bower:
 
 bower-install:
   cmd.run:
-    - name: {{ www_root }}/node_modules/.bin/bower install --config.interactive=false
+    - name: {{ pre_arg }} {{ www_root }}/node_modules/.bin/bower install --config.interactive=false
     - cwd: {{ www_root }}
     - user: {{ user }}
     - require:
@@ -31,11 +40,9 @@ bower-install:
 
 gulp-exec:
   cmd.run:
-    - name: {{ www_root }}/node_modules/.bin/gulp
-    - name: "source ~{{ user }}/.rvm/scripts/rvm; rvm 2.0.0@{{ proj_name }} exec bundle exec ./node_modules/.bin/gulp"
+    - name: {{ pre_arg }} {{ www_root }}/node_modules/.bin/gulp
     - cwd: {{ www_root }}
     - user: {{ user }}
     - require:
-      - sls: rvm
       - npm: npm-install
 
