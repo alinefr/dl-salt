@@ -10,10 +10,9 @@
   {% set grants_ip = salt['pillar.get']('master:mysql.host','localhost') %}
 {% endif %}
 
-{% if not grains['host'] in ['ddll','staging','odesmistificador'] %}
 mysql:
   cmd.run:
-    - name: echo '{{ salt["grains.get_or_set_hash"]("mysql:root") }}' > /dev/null 2>&1
+    - name: echo '{{ salt['grains.get_or_set_hash']('mysql:root') }}' > /dev/null 2>&1
 
   debconf.set:
     - name: mysql-server
@@ -37,7 +36,6 @@ mysql:
     - enable: True
     - require:
       - pkg: mysql
-{% endif %}
 
 mysql-client:
   pkg.installed
@@ -47,18 +45,24 @@ python-mysqldb:
 
 dbconfig:
   cmd.run:
-    - name: echo "{{ salt['grains.get_or_set_hash']('' ~ mysql_db ~ ':' ~ mysql_user ~ '') }}" > /dev/null 2>&1
+    - name: echo '{{ salt['grains.get_or_set_hash']('' ~ mysql_db ~ ':' ~ mysql_user ~ '') }}' > /dev/null 2>&1
 
   mysql_user.present:
     - name: {{ mysql_user }}
     - password: "{{ salt['grains.get']('' ~ mysql_db ~ ':' ~ mysql_user ~ '') }}"
     - host: {{ grants_ip }}
+    - connection_user: root
+    - connection_pass: {{ salt['grains.get']('mysql:root') }}
+    - connection_charset: utf8
     - require:
       - cmd: dbconfig
       - pkg: python-mysqldb
 
   mysql_database.present:
     - name: {{ mysql_db }}
+    - connection_user: root
+    - connection_pass: {{ salt['grains.get']('mysql:root') }}
+    - connection_charset: utf8
     - require:
       - mysql_user: dbconfig
 
@@ -67,6 +71,9 @@ dbconfig:
     - database: {{ mysql_db }}.*
     - user: {{ mysql_user }}
     - host: {{ grants_ip }}
+    - connection_user: root
+    - connection_pass: {{ salt['grains.get']('mysql:root') }}
+    - connection_charset: utf8
     - require:
       - mysql_database: dbconfig 
 

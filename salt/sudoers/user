@@ -1,2 +1,0 @@
-{% set user = salt['pillar.get']('user','deploy') -%}
-{{ user }} ALL=(ALL) NOPASSWD:SETENV: /usr/bin/salt-call -c salt state.highstate

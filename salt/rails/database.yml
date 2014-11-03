@@ -17,4 +17,4 @@ production:
   encoding: utf8
   database: {{ mysql_db }}
   username: {{ mysql_user }}
-  password: '{{ salt['grains.get']('mysql:' ~ mysql_user ~ '') }}'
+  password: '{{ salt['grains.get']('' ~ mysql_db ~ ':' ~ mysql_user ~ '') }}'

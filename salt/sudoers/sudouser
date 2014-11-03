@@ -1,2 +1,0 @@
-{% set sudouser = salt['pillar.get']('sudouser','ubuntu') -%}
-{{ sudouser }}  ALL=(ALL) NOPASSWD: ALL
