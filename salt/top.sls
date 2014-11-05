@@ -1,4 +1,16 @@
 base:
+  '*':
+    - base
+
+  'dldeploy.dlapp.co':
+    - servers.dldeploy
+
+  'dlapp.co':
+    - postfix
+
+  'ddll.co':
+    - servers.ddll
+
   'profile:brunch':
     - match: pillar
     - base
@@ -22,13 +34,4 @@ base:
     - base
     - sites.template
     - hook
-
-  'dldeploy.dlapp.co':
-    - servers.dldeploy
-
-  'dlapp.co':
-    - postfix
-
-  'ddll.co':
-    - servers.ddll
 
