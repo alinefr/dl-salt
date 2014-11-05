@@ -10,4 +10,3 @@ salt '*' cmd.run cmd='/opt/lpvs/lpvs scan' env='{HOME: /root}':
     - user: root
     - minute: 05
     - hour: 02
-
