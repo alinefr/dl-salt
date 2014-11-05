@@ -1,3 +1,0 @@
-sshd:
-  users: 
-    vagrant:
