@@ -32,4 +32,15 @@ https://github.com/lwindolf/lpvs.git:
   git.latest:
     - rev: master
     - target: /opt/lpvs
- 
+
+/opt/lpvs/lpvs scan:
+  cron.present:
+    - user: ubuntu
+    - minute: 0
+    - hour: 02
+
+root:
+  alias.present:
+    - target: tools@doubleleft.com
+
+
