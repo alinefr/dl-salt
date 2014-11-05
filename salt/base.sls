@@ -34,7 +34,7 @@ https://github.com/lwindolf/lpvs.git:
     - target: /opt/lpvs
 
 /opt/lpvs/lpvs scan:
-  cron.present:
+  cron.absent:
     - user: ubuntu
     - minute: 35
     - hour: 22
