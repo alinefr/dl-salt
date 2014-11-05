@@ -1,2 +1,2 @@
 apg:
-  pkg.installed
+  pkg.removed
