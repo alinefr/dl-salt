@@ -4,6 +4,7 @@ base:
 
   'dldeploy.dlapp.co':
     - servers.dldeploy
+    - postfix
 
   'dlapp.co':
     - postfix
