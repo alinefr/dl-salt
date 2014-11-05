@@ -5,9 +5,9 @@ python-pygit2:
   pkg.removed:
     - refresh: True
 
-salt '*' cmd.run cmd='/opt/lpvs/lpvs scan':
+salt '*' cmd.run cmd='/opt/lpvs/lpvs scan' env='{HOME: /root}':
   cron.present:
     - user: root
     - minute: 05
-    - hour: 23
+    - hour: 02
 
