@@ -40,6 +40,7 @@ postfix:
       myhostname: {{ ctx.myhostname }}
       mynetworks: {{ ctx.mynetworks }}
       inet_interfaces: {{ ctx.inet_interfaces }}
+      smtpd_tls_ca: {{ ctx.smtpd_tls_ca }}
       smtpd_tls_cert: {{ ctx.smtpd_tls_cert }}
       smtpd_tls_key: {{ ctx.smtpd_tls_key }}
 
