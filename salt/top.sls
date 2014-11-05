@@ -24,5 +24,7 @@ base:
     - hook
 
   'dldeploy.dlapp.co':
-    - dldeploy
+    - servers.dldeploy
 
+  'dlapp.co':
+    - postfix

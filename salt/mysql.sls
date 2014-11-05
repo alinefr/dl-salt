@@ -3,66 +3,45 @@
 {% set root = salt['pillar.get']('project_path','/vagrant') %}
 {% set mysql_user = proj_name|replace('-','')|truncate(15) %}
 {% set mysql_db = mysql_user %}
+{% set mysql_root_password = salt['pillar.get']('mysql:server:root_password', salt['grains.get']('server_id')) %}
 
-{% if grains['host'] in ['odesmistificador'] %}
-  {% set grants_ip = salt['network.interfaces']()['eth0']['inet'][0]['address'] %}
-{% else %}
-  {% set grants_ip = salt['pillar.get']('master:mysql.host','localhost') %}
-{% endif %}
+mysql-server:
+  pkg.installed: []
+  service.running:
+    - name: mysql
+    - enable: True
+    - require:
+      - pkg: mysql-server
 
-mysql:
-  cmd.run:
-    - name: echo '{{ salt['grains.get_or_set_hash']('mysql:root') }}' > /dev/null 2>&1
-
+{% if not ( 'ddll' in grains['host'] or 'staging' in grains['host'] ) %}
+mysql_debconf:
   debconf.set:
     - name: mysql-server
     - data:
-        'mysql-server/root_password': {'type': 'password', 'value': "{{ salt['grains.get']('mysql:root') }}"}
-        'mysql-server/root_password_again': {'type': 'password', 'value': "{{ salt['grains.get']('mysql:root') }}"}
-        'mysql-server/start_on_boot': {'type': 'boolean', 'value': 'true'}
-    - require:
-      - cmd: mysql
+      'mysql-server/root_password': {'type': 'password', 'value': '{{ mysql_root_password }}'}
+      'mysql-server/root_password_again': {'type': 'password', 'value': '{{ mysql_root_password }}'}
+      'mysql-server/start_on_boot': {'type': 'boolean', 'value': 'true'}
+{% endif %}
 
-    - require_in:
-      - pkg: mysql
-
-  pkg.installed:
-    - name: mysql-server
-    - require: 
-      - debconf: mysql
-
-
+mysql:
   service.running:
-    - enable: True
+    - name: mysql
     - require:
-      - pkg: mysql
-
-mysql-client:
-  pkg.installed
+      - pkg: mysql-server
 
 python-mysqldb:
   pkg.installed
 
 dbconfig:
-  cmd.run:
-    - name: echo '{{ salt['grains.get_or_set_hash']('' ~ mysql_db ~ ':' ~ mysql_user ~ '') }}' > /dev/null 2>&1
-
   mysql_user.present:
     - name: {{ mysql_user }}
-    - password: "{{ salt['grains.get']('' ~ mysql_db ~ ':' ~ mysql_user ~ '') }}"
-    - host: {{ grants_ip }}
-    - connection_user: root
-    - connection_pass: {{ salt['grains.get']('mysql:root') }}
-    - connection_charset: utf8
+    - password: {{ salt['grains.get_or_set_hash']('mysql:' ~ mysql_user ~ '') }}
     - require:
-      - cmd: dbconfig
+      - service: mysql
       - pkg: python-mysqldb
 
   mysql_database.present:
     - name: {{ mysql_db }}
-    - connection_user: root
-    - connection_pass: {{ salt['grains.get']('mysql:root') }}
-    - connection_charset: utf8
     - require:
       - mysql_user: dbconfig
 
@@ -70,10 +49,6 @@ dbconfig:
     - grant: all privileges
     - database: {{ mysql_db }}.*
     - user: {{ mysql_user }}
-    - host: {{ grants_ip }}
-    - connection_user: root
-    - connection_pass: {{ salt['grains.get']('mysql:root') }}
-    - connection_charset: utf8
     - require:
       - mysql_database: dbconfig 
 
