@@ -43,4 +43,8 @@ root:
   alias.present:
     - target: tools@doubleleft.com
 
+newaliases:
+  cmd.wait:
+    - watch: 
+      - alias: root
 
