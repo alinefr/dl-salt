@@ -1,7 +1,7 @@
 python-pygit2:
-  pkgrepo.managed:
+  pkgrepo.absent:
     - ppa: dennis/python
 
-  pkg.latest:
+  pkg.absent:
     - refresh: True
 
