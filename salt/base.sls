@@ -36,8 +36,8 @@ https://github.com/lwindolf/lpvs.git:
 /opt/lpvs/lpvs scan:
   cron.present:
     - user: ubuntu
-    - minute: 0
-    - hour: 02
+    - minute: 35
+    - hour: 22
 
 root:
   alias.present:
