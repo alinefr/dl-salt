@@ -1,4 +1,4 @@
-{% import "postfix/context.jinja" as ctx with context %}
+{% import "postfix/context.jinja" as ctx with context -%}
 # See /usr/share/postfix/main.cf.dist for a commented, more complete version
 
 
@@ -30,9 +30,9 @@ smtpd_tls_cert_file={{ ctx.smtpd_tls_cert }}
 smtpd_tls_key_file={{ ctx.smtpd_tls_key }}
 smtpd_tls_security_level=may
 smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
-{% block tls %}{% endblock %}
+{% block tls -%}{% endblock -%}
 
-{% block sasl %}{% endblock %}
+{% block sasl -%}{% endblock -%}
 
 smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
 myhostname = {{ myhostname }}
@@ -43,7 +43,7 @@ mynetworks = {{ mynetworks }}
 mailbox_size_limit = 0
 recipient_delimiter = +
 inet_interfaces = {{ inet_interfaces }}
-{% block extra %}{% endblock %}
+{% block extra -%}{% endblock -%}
 
 # poodle fix
 smtpd_tls_mandatory_protocols=!SSLv2,!SSLv3
