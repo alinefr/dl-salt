@@ -8,6 +8,7 @@ base:
 
   'dlapp.co':
     - postfix
+    - servers.dlapp
 
   'ddll.co':
     - servers.ddll
