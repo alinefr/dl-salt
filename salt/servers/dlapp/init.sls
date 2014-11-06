@@ -1,6 +1,4 @@
-{% import "base/init.sls" as base with context %}
-
-{{ base.user_home }}/bin/monitor.sh
+/home/deploy/bin/monitor.sh:
   file.managed:
     - source: salt://servers/dlapp/monitor.sh
     - user: deploy
