@@ -10,6 +10,8 @@ mailutils:
 
   cron.present:
     - user: deploy
+    - require:
+      - file: /home/deploy/bin/monitor.sh
    
 monitor_email:
   cron.present:
@@ -18,4 +20,5 @@ monitor_email:
     - minute: 0
     - require:
       - pkg: mailutils
+      - file: /home/deploy/bin/monitor.sh
     
