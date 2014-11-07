@@ -29,8 +29,6 @@ nginx-conf-available:
       proj_name: {{ proj_name }}
     - watch_in:
       - service: nginx
-    - defaults:
-        ssl: False
 
 nginx-conf-enabled:
   file.symlink:
