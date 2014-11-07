@@ -17,7 +17,7 @@ nginx-conf:
       - {{ www_root }}
     - user: {{ user }}
     - makedirs: True
-    - unless: test -d {{ root }}
+    - unless: test -d {{ www_root }}
 
 nginx-conf-available:
   file.managed:
