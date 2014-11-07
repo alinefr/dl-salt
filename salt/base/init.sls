@@ -42,3 +42,9 @@ newaliases:
     - watch: 
       - alias: root
 
+/etc/salt/minion.d/mine.conf:
+  file.managed:
+    - source: salt://base/mine.conf
+    - makedirs: True
+    - user: root
+
