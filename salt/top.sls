@@ -12,9 +12,6 @@ base:
     - postfix
     - servers.dlapp
 
-  'ddll.co':
-    - servers.ddll
-
   'profile:brunch':
     - match: pillar
     - base
