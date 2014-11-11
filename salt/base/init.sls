@@ -33,15 +33,6 @@ https://github.com/lwindolf/lpvs.git:
     - rev: master
     - target: /opt/lpvs
 
-root:
-  alias.present:
-    - target: tools@doubleleft.com
-
-newaliases:
-  cmd.wait:
-    - watch: 
-      - alias: root
-
 /etc/salt/minion.d/mine.conf:
   file.managed:
     - source: salt://base/mine.conf
