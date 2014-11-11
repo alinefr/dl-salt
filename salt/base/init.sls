@@ -53,3 +53,6 @@ at:
     - require: 
       - pkg: at
 
+update-motd:
+  pkg.installed
+
