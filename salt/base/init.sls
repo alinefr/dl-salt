@@ -15,6 +15,7 @@ include:
 git:
   pkg.installed
 
+{% if salt['pillar.get']('project_username') %}
 git.config_set:
   module.run:
     - setting_name: url.https://.insteadOf
@@ -24,6 +25,7 @@ git.config_set:
     - cwd: {{ www_root }}
     - require:
       - pkg: git
+{% endif %}
 
 libxml-libxslt-perl:
   pkg.installed
