@@ -1,15 +1,14 @@
 base:
   '*':
     - base
+    - postfix
     - munin.node.config
 
   'dldeploy.dlapp.co':
     - servers.dldeploy
-    - postfix
     - munin.master.config
 
   'dlapp.co':
-    - postfix
     - servers.dlapp
 
   'profile:brunch':

@@ -55,4 +55,13 @@ postfix:
     - group: root
     - mode: 755
 
+root:
+  alias.present:
+    - target: tools@doubleleft.com
+
+newaliases:
+  cmd.wait:
+    - watch: 
+      - alias: root
+
 # TODO: manage smtpd_tls_cert and smtpd_tls_key if defined
