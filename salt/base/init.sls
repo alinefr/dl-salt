@@ -53,6 +53,30 @@ at:
     - require: 
       - pkg: at
 
-update-motd:
-  pkg.installed
+ssh:
+  pkg:
+    - installed
 
+  service:
+    - running
+
+custom_motd:
+  file.managed:
+    - name: /etc/motd.tail
+    - source: salt://base/motd.tail
+
+set_banner:
+{% if 'Banner' in salt['cmd.run']('grep Banner /etc/ssh/sshd_config') %}
+  file.replace:
+    - pattern: "[!#]Banner.*$"
+    - repl: "Banner /etc/motd.tail"
+{% else %}
+  file.append:
+    - text:
+      - Banner /etc/motd.tail
+{% endif %}
+    - name: /etc/ssh/sshd_config
+    - watch_in:
+      - service: ssh
+    - require:
+      - file: custom_motd
