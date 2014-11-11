@@ -1,5 +1,6 @@
 base:
-  '*':
+  'os:Ubuntu':
+    - match: grain
     - base
     - postfix
     - munin.node.config
