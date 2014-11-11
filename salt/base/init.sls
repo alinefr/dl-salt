@@ -47,6 +47,8 @@ at:
     - source: salt://base/mine.conf
     - makedirs: True
     - user: root
+    - watch_in:
+      - cmd: /etc/salt/minion.d/mine.conf
 
   cmd.wait:
     - name: echo service salt-minion restart | at now + 1 minute
