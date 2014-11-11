@@ -33,9 +33,23 @@ https://github.com/lwindolf/lpvs.git:
     - rev: master
     - target: /opt/lpvs
 
+at:
+  pkg:
+    - installed
+  service.running:
+    - name: atd
+    - enable: True
+
 /etc/salt/minion.d/mine.conf:
   file.managed:
     - source: salt://base/mine.conf
     - makedirs: True
     - user: root
+
+  cmd.wait:
+    - name: echo service salt-minion restart | at now + 1 minute
+    - watch: 
+      - file: /etc/salt/minion.d/mine.conf
+    - require: 
+      - pkg: at
 
