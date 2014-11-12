@@ -89,3 +89,5 @@ set_banner:
     - require:
       - file: custom_motd
 
+include:
+  - base.munin_plugins.munin_plugins.nginx
