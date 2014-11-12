@@ -73,6 +73,10 @@ mysql_munin_deps:
 ] %}
 {% for mysql_plugin in enabled_mysql %}
 {{ plugins_dir }}/{{ mysql_plugin }}:
+  file:
+    - absent
+
+{{ plugins_dir }}/mysql_{{ mysql_plugin }}:
   file.symlink:
     - target: {{ plugins_src }}/mysql_
     - require:
