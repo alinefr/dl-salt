@@ -12,7 +12,7 @@ include:
 nginx-conf-available:
   file.managed:
     - name: /etc/nginx/sites-available/{{ proj_name }}.conf
-    - source: salt://base/munin_plugins_nginx.conf
+    - source: salt://base/munin_plugins/munin_plugins_nginx.conf
     - template: jinja
     - context: 
       proj_name: {{ proj_name }}
