@@ -99,3 +99,5 @@ mysql_munin_deps:
     - target: {{ plugins_src }}/ps_
 {% endfor %}   
 
+include:
+  - .munin_plugins_nginx
