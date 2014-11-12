@@ -3,7 +3,7 @@ base:
     - match: grain
     - base
     - postfix
-    - munin.node.config
+    - munin.node.plugins
     - base.munin_plugins
 
   'dldeploy.dlapp.co':
