@@ -38,9 +38,10 @@
   'tcp'
 ] %}
 {% for plugin in enabled_plugins %}
-{{ plugins_dir }}/{{ enabled_plugins }}:
+{{ plugins_dir }}/{{ plugin }}:
   file.symlink:
     - target: {{ plugins_src }}/{{ plugin }}
+{% endfor %}
 
 {% if salt['pkg.version']('mysql-server') %}
 mysql_munin_deps:
