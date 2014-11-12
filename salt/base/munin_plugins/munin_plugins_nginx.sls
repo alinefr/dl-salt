@@ -9,7 +9,7 @@ include:
   {% set sites_enabled = "/etc/nginx/conf.d" %}
 {% endif%}
 
-nginx-conf-available:
+nginx-localhost-available:
   file.managed:
     - name: /etc/nginx/sites-available/{{ proj_name }}.conf
     - source: salt://base/munin_plugins/munin_plugins_nginx.conf
@@ -19,7 +19,7 @@ nginx-conf-available:
     - watch_in:
       - service: nginx
 
-nginx-conf-enabled:
+nginx-localhost-enabled:
   file.symlink:
     - name: {{ sites_enabled }}/{{ proj_name }}.conf
     - target: /etc/nginx/sites-available/{{ proj_name }}.conf
