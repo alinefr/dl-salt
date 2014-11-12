@@ -24,7 +24,7 @@
   'nfsd4',
 ] %}
 
-{% for plugin in plugins_dir %}
+{% for plugin in absent_plugins %}
 {{ plugins_dir }}/{{ plugin }}:
   file:
     - absent
