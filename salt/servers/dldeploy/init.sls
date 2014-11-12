@@ -13,23 +13,11 @@ include:
   file.symlink:
     - target: /usr/share/munin/plugins/munin_update
 
-# install new template
-/etc/munin/templates.bkp:
-  file.rename:
-    - source: /etc/munin/templates
-
 munin_dynamic_template:
   git.latest:
     - name: https://github.com/DaveMDS/munin_dynamic_template.git
     - rev: master
     - target: /etc/munin/munin_dynamic_template
-
-  file.symlink:
-    - name: /etc/munin/templates
-    - target: /opt/munin-jquery-template/templates
-    - require:
-      - file: /etc/munin/templates.bkp
-      - git: munin_dynamic_template
 
 
 
