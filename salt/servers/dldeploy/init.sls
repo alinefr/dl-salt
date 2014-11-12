@@ -26,7 +26,7 @@ munin-jquery-template:
 
   file.symlink:
     - name: /etc/munin/templates
-    - target: /opt/munin-jquery-template/template
+    - target: /opt/munin-jquery-template/templates
     - require:
       - file: /etc/munin/templates.bkp
       - git: munin-jquery-template
