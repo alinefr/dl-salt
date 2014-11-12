@@ -59,7 +59,7 @@ mysql_munin_deps:
       - libdbi-perl
       - libcache-cache-perl
 
-{{ plugins_dir }}/mysql_file_tables
+{{ plugins_dir }}/mysql_file_tables:
   file:
     - absent
 
@@ -82,11 +82,6 @@ mysql_munin_deps:
     - require:
       - pkg: mysql_munin_deps
 {% endfor %}
-
-{{ plugins_dir }}/ps_mysql:
-  file:
-    - absent
-
 {% endif %}
 
 {% if salt['pkg.version']('openvpn') %}
