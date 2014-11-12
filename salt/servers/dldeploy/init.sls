@@ -20,7 +20,7 @@ include:
 
 munin-jquery-template:
   git.latest:
-    - name: https://github.com/mallocator/Munin-JQuery-Template.git:
+    - name: https://github.com/mallocator/Munin-JQuery-Template.git
     - rev: master
     - target: /opt/munin-jquery-template
 
