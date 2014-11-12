@@ -87,10 +87,8 @@ mysql_munin_deps:
   'sshd'
 ] %}
 {% for ps_plugin in enabled_ps %}
-{{ plugins_dir }}/ps_{{ enabled_ps }}:
+{{ plugins_dir }}/ps_{{ ps_plugin }}:
   file.symlink:
     - target: {{ plugins_src }}/ps_
 {% endfor %}   
-
-
 
