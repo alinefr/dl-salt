@@ -19,5 +19,8 @@ munin_dynamic_template:
     - rev: master
     - target: /etc/munin/munin_dynamic_template
 
+  file.managed:
+    - name: /etc/munin/munin_dynamic_template/munin2/template.conf
+    - source: salt://servers/dldeploy/munin_dynamic_template.conf
 
 
