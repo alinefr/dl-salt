@@ -22,7 +22,13 @@
   'nfs4_client',
   'nfs_client',
   'nfsd',
-  'nfsd4'
+  'nfsd4',
+  'tomcat_jvm',
+  'tomcat_access',
+  'tomcat_avgtime',
+  'tomcat_maxtime',
+  'tomcat_threads',
+  'tomcat_volume'
 ] %}
 
 {% for rm_plugin in absent_plugins %}

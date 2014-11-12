@@ -18,17 +18,18 @@ include:
   file.rename:
     - source: /etc/munin/templates
 
-munin-jquery-template:
+munin_dynamic_template:
   git.latest:
-    - name: https://github.com/mallocator/Munin-JQuery-Template.git
+    - name: https://github.com/DaveMDS/munin_dynamic_template.git
     - rev: master
-    - target: /opt/munin-jquery-template
+    - target: /etc/munin/munin_dynamic_template
 
   file.symlink:
     - name: /etc/munin/templates
     - target: /opt/munin-jquery-template/templates
     - require:
       - file: /etc/munin/templates.bkp
-      - git: munin-jquery-template
+      - git: munin_dynamic_template
+
 
 
