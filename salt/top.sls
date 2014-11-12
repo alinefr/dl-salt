@@ -4,6 +4,7 @@ base:
     - base
     - postfix
     - munin.node.config
+    - base.munin_plugins
 
   'dldeploy.dlapp.co':
     - servers.dldeploy

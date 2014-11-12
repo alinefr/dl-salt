@@ -11,7 +11,7 @@ include:
   {% set pre_args = '' %}
 {% endif %}
 
-
+# install git
 git:
   pkg.installed
 
@@ -27,6 +27,7 @@ git.config_set:
       - pkg: git
 {% endif %}
 
+# lpvs scanner + perl dep
 libxml-libxslt-perl:
   pkg.installed
 
@@ -35,6 +36,7 @@ https://github.com/lwindolf/lpvs.git:
     - rev: master
     - target: /opt/lpvs
 
+# at needs to be running for salt-minion restart 1 minute later
 at:
   pkg:
     - installed
@@ -42,6 +44,7 @@ at:
     - name: atd
     - enable: True
 
+# configure "mine" to get all servers for munin
 /etc/salt/minion.d/mine.conf:
   file.managed:
     - source: salt://base/mine.conf
@@ -57,6 +60,7 @@ at:
     - require: 
       - pkg: at
 
+# setup for motd
 ssh:
   pkg:
     - installed
@@ -84,3 +88,4 @@ set_banner:
       - service: ssh
     - require:
       - file: custom_motd
+
