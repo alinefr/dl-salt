@@ -14,3 +14,9 @@ cron_lpvs:
 
 include:
   - servers.dldeploy.munin_template
+
+/etc/munin/plugins/munin_update:
+  file.symlink:
+    - target: /usr/share/munin/plugins/munin_update
+
+

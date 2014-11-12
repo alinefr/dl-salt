@@ -1,4 +1,5 @@
 {% set plugins_dir = '/etc/munin/plugins' %}
+{% set plugins_src = '/usr/share/munin/plugins' %}
 {% set absent_plugins = [ 
   'if_dummy0', 
   'if_err_dummy0', 
@@ -21,11 +22,75 @@
   'nfs4_client',
   'nfs_client',
   'nfsd',
-  'nfsd4',
+  'nfsd4'
 ] %}
 
-{% for plugin in absent_plugins %}
-{{ plugins_dir }}/{{ plugin }}:
+{% for rm_plugin in absent_plugins %}
+{{ plugins_dir }}/{{ rm_plugin }}:
   file:
     - absent
 {% endfor %}
+
+{% set enabled_plugins = [
+  'http_loadtime',
+  'nginx_request',
+  'nginx_status',
+  'tcp'
+] %}
+{% for plugin in enabled_plugins %}
+{{ plugins_dir }}/{{ enabled_plugins }}:
+  file.symlink:
+    - target: {{ plugins_src }}/{{ plugin }}
+
+{% if salt['pkg.version']('mysql-server') %}
+mysql_munin_deps:
+  pkg.installed:
+    - names:
+      - libdbi-perl
+      - libcache-cache-perl
+
+{% set enabled_mysql = [
+  'commands',
+  'connections',
+  'file_tables',
+  'network_traffic',
+  'qcache',
+  'qcache_mem',
+  'select_types',
+  'slow',
+  'sorts',
+  'table_locks'
+] %}
+{% for mysql_plugin in enabled_mysql %}
+{{ plugins_dir }}/{{ mysql_plugin }}:
+  file.symlink:
+    - target: {{ plugins_src }}/mysql_
+    - require:
+      - pkg: mysql_munin_deps
+{% endfor %}
+
+{{ plugins_dir }}/ps_mysql:
+  file.symlink:
+    - target: {{ plugins_src }}/ps_
+{% endif %}
+
+{% if salt['pkg.version']('openvpn') %}
+{{ plugins_dir }}/openvpn:
+  file.symlink:
+    - target: {{ plugins_src }}/openvpn
+{% endif %}
+
+{% set enabled_ps = [
+  'mysqld',
+  'php-fpm',
+  'nginx',
+  'sshd'
+] %}
+{% for ps_plugin in enabled_ps %}
+{{ plugins_dir }}/ps_{{ enabled_ps }}:
+  file.symlink:
+    - target: {{ plugins_src }}/ps_
+{% endfor %}   
+
+
+
