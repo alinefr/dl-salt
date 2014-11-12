@@ -59,10 +59,14 @@ mysql_munin_deps:
       - libdbi-perl
       - libcache-cache-perl
 
+{{ plugins_dir }}/mysql_file_tables
+  file:
+    - absent
+
 {% set enabled_mysql = [
   'commands',
   'connections',
-  'file_tables',
+  'files_tables',
   'network_traffic',
   'qcache',
   'qcache_mem',
