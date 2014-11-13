@@ -1,7 +1,7 @@
 check process mysql with pidfile /run/mysqld/mysqld.pid 
    group database
-   start program = "service mysql start"
-   stop program = "service mysql stop"
+   start program = "/usr/sbin/service mysql start"
+   stop program = "/usr/sbin/service mysql stop"
    if failed host 127.0.0.1 port 3306 protocol mysql then restart
    if 5 restarts within 5 cycles then timeout
    depends on mysql_bin
