@@ -1,0 +1,5 @@
+check process nginx with pidfile /run/nginx.pid
+  start program = "service nginx start"
+  stop program  = "service nginx stop"
+  group www-data 
+

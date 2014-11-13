@@ -1,8 +1,9 @@
 base:
   'os:Ubuntu':
     - match: grain
-    - monit
     - base
+    - monit
+    - base.monit_modules
     - postfix
     - munin.node.plugins
     - base.munin_plugins
