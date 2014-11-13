@@ -1,6 +1,9 @@
 munin-plugins-extra:
   pkg.installed
 
+time:
+  pkg.installed
+
 {% set plugins_dir = '/etc/munin/plugins' %}
 {% set plugins_src = '/usr/share/munin/plugins' %}
 {% set absent_plugins = [ 
@@ -12,6 +15,7 @@ munin-plugins-extra:
   'if_err_ip6tnl0',
   'if_err_ip6_vti0',
   'if_err_ip_vti0',
+  'if_err_vethz1Cwjt',
   'if_err_teql0',
   'if_err_tunl0',
   'if_gre0',
@@ -22,6 +26,7 @@ munin-plugins-extra:
   'if_ip_vti0',
   'if_teql0',
   'if_tunl0',
+  'if_vethz1Cwjt',
   'nfs4_client',
   'nfs_client',
   'nfsd',
@@ -92,10 +97,14 @@ mysql_munin_deps:
 
 {% set enabled_ps = [
   'mysqld',
-  'php-fpm',
+  'php5-fpm',
   'nginx',
   'sshd'
 ] %}
+{{ plugins_dir }}/ps_php-fpm:
+  file:
+    - absent
+
 {% for ps_plugin in enabled_ps %}
 {{ plugins_dir }}/ps_{{ ps_plugin }}:
   file.symlink:
