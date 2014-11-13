@@ -97,11 +97,11 @@ mysql_munin_deps:
 
 {% set enabled_ps = [
   'mysqld',
-  'php5-fpm',
+  'php-fpm',
   'nginx',
   'sshd'
 ] %}
-{{ plugins_dir }}/ps_php-fpm:
+{{ plugins_dir }}/ps_php5-fpm:
   file:
     - absent
 
