@@ -1,6 +1,9 @@
 munin-plugins-extra:
   pkg.installed
 
+time:
+  pkg.installed
+
 {% set plugins_dir = '/etc/munin/plugins' %}
 {% set plugins_src = '/usr/share/munin/plugins' %}
 {% set absent_plugins = [ 
