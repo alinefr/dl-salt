@@ -101,7 +101,7 @@ mysql_munin_deps:
   'nginx',
   'sshd'
 ] %}
-{{ plugins_dir }}/ps_php-fpm
+{{ plugins_dir }}/ps_php-fpm:
   file:
     - absent
 
