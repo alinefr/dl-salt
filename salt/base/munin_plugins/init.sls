@@ -95,10 +95,14 @@ mysql_munin_deps:
 
 {% set enabled_ps = [
   'mysqld',
-  'php-fpm',
+  'php5-fpm',
   'nginx',
   'sshd'
 ] %}
+{{ plugins_dir }}/ps_php-fpm
+  file:
+    - absent
+
 {% for ps_plugin in enabled_ps %}
 {{ plugins_dir }}/ps_{{ ps_plugin }}:
   file.symlink:
