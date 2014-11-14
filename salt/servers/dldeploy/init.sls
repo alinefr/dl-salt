@@ -29,10 +29,16 @@ open-m-monit:
     - rev: master
     - target: /srv/www/open-m-monit
 
-  file.managed:
+  file.serialize:
     - name: /srv/www/open-m-monit/config.json
-    - source: salt://servers/dldeploy/config.json
-    - template: jinja
+    - dataset: 
+      clusterName:
+      {%- for host, hostinfo in salt['mine.get']('*', 'network.interfaces').items() %}
+        hostname: {{ host }}
+        username: {{ salt['pillar.get']('monit:http_access:user') }}
+        password: {{ salt['pillar.get']('monit:http_access:password') }}
+      {%- endfor %}
+    - formatter: json
     - require:
       - git: open-m-monit
 
