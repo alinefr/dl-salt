@@ -1,7 +1,9 @@
 #!py
 
 def run():
-  mmonit = {
+  config = {}
+
+  config['mmonit'] = {
     'git.latest': [
       {'name': 'https://github.com/antoniopuero/open-m-monit.git'},
       {'rev': 'master'},
@@ -19,4 +21,4 @@ def run():
     ]
   }
 
-  return mmonit
+  return config
