@@ -1,4 +1,3 @@
-import salt
 import json
 
 def run():
