@@ -15,7 +15,7 @@ def run():
       {'source': 'salt://servers/dldeploy/config.py'},
       {'template': 'py'},
       {'require': [
-        {'git': 'open-m-monit'}
+        {'git': 'mmonit'}
         ]
       }
     ]
