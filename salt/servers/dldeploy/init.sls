@@ -23,17 +23,6 @@ munin_dynamic_template:
     - name: /etc/munin/munin_dynamic_template/munin2/template.conf
     - source: salt://servers/dldeploy/munin_dynamic_template.conf
 
-open-m-monit:
-  git.latest:
-    - name: https://github.com/antoniopuero/open-m-monit.git
-    - rev: master
-    - target: /srv/www/open-m-monit
-
-  file.managed:
-    - name: /srv/www/open-m-monit/config.json
-    - source: salt://servers/dldeploy/config.py
-    - template: py
-    - require:
-      - git: open-m-monit
-
+include:
+  - .open-m-monit
 
