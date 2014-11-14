@@ -25,7 +25,7 @@ munin_dynamic_template:
 
 open-m-monit:
   git.latest:
-    - name: https://github.com/antoniopuero/open-m-monit.git:
+    - name: https://github.com/antoniopuero/open-m-monit.git
     - rev: master
     - target: /srv/www/open-m-monit
     - user: deploy
