@@ -1,0 +1,12 @@
+"{""clusterName":
+        [
+{%- for host, hostinfo in salt['mine.get']('*', 'network.interfaces').items() %}
+            "{"
+            "hostname": "{{ auth }}",
+            "username": "monit",
+            "password": "",
+            "alias"   : ""
+            "}",
+{%- endfor %}
+        ],
+    "}"
