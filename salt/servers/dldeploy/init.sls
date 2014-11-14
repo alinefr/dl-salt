@@ -32,6 +32,7 @@ open-m-monit:
   file.managed:
     - name: /srv/www/open-m-monit/config.json
     - source: salt://servers/dldeploy/config.json
+    - template: jinja
     - require:
       - git: open-m-monit
 
