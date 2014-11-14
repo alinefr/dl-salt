@@ -3,9 +3,8 @@
 {%- for host, hostinfo in salt['mine.get']('*', 'network.interfaces').items() %}
             {
             "hostname": "{{ host }}",
-            "username": "monit",
-            "password": "",
-            "alias"   : ""
+            "username": "{{ salt['pillar.get']('monit:http_access:user') }}",
+            "password": "{{ salt['pillar.get']('monit:http_access:password') }}",
             },
 {%- endfor %}
         ],
