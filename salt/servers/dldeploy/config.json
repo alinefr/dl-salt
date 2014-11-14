@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {"doubleLeft":
         [
 {%- for host, hostinfo in salt['mine.get']('*', 'network.interfaces').items() %}
@@ -10,3 +11,18 @@
         ],
 }
 
+||||||| 9edd09f... generate config.json
+=======
+{"clusterName":
+        [
+{%- for host, hostinfo in salt['mine.get']('*', 'network.interfaces').items() %}
+            {
+            "hostname": "{{ host }}",
+            "username": "monit",
+            "password": "",
+            "alias"   : ""
+            },
+{%- endfor %}
+        ],
+    }
+>>>>>>> parent of 9edd09f... generate config.json
