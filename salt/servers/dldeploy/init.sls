@@ -28,12 +28,10 @@ open-m-monit:
     - name: https://github.com/antoniopuero/open-m-monit.git
     - rev: master
     - target: /srv/www/open-m-monit
-    - user: deploy
 
   file.managed:
     - name: /srv/www/open-m-monit/config.json
     - source: salt://servers/dldeploy/config.json
-    - user: deploy
     - require:
       - git: open-m-monit
 
