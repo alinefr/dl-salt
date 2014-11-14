@@ -6,8 +6,8 @@ def run():
       {'name': 'https://github.com/antoniopuero/open-m-monit.git'},
       {'rev': 'master'},
       {'target': '/srv/www/open-m-monit'}
-    ]
-    
+    ],
+
     'file.managed': [
       {'name': '/srv/www/open-m-monit/config.py'},
       {'source': 'salt://servers/dldeploy/config.py'},
@@ -19,4 +19,4 @@ def run():
     ]
   }
 
-  
+  return mmonit
