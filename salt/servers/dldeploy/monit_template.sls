@@ -22,7 +22,7 @@ monin-conf:
 monin-conf-available:
   file.managed:
     - name: /etc/nginx/sites-available/{{ proj_name }}.conf
-    - source: salt://servers/dldeploy/munin_template.conf
+    - source: salt://servers/dldeploy/monit_template.conf
     - template: jinja
     - context: 
       www_root: {{ www_root }}
