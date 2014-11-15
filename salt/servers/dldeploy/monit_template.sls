@@ -3,9 +3,9 @@
 {% set proj_name = 'monit' %}
 
 {% if grains['os_family'] == 'Debian' %}
-  {% set sites_enabled = "/etc/monin/sites-enabled" %}
+  {% set sites_enabled = "/etc/nginx/sites-enabled" %}
 {% elif grains['os_family'] == 'RedHat' %}
-  {% set sites_enabled = "/etc/monin/conf.d" %}
+  {% set sites_enabled = "/etc/nginx/conf.d" %}
 {% endif%}
 
 include:
