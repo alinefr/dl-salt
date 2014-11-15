@@ -7,7 +7,7 @@ cron_lpvs:
 
 include:
   - servers.dldeploy.munin_template
-  - servers.dldeploy.monin_template
+  - servers.dldeploy.monit_template
 
 # install munin_update plugin
 /etc/munin/plugins/munin_update:

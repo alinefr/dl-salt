@@ -1,9 +1,9 @@
 {% set www_root = '/srv/www/open-m-monit' %}
 {% set user = 'deploy' %}
-{% set proj_name = 'monin' %}
+{% set proj_name = 'monit' %}
 
 include:
-  - monin
+  - monit
 
 {% if grains['os_family'] == 'Debian' %}
   {% set sites_enabled = "/etc/monin/sites-enabled" %}
@@ -35,4 +35,4 @@ monin-conf-enabled:
     - name: {{ sites_enabled }}/{{ proj_name }}.conf
     - target: /etc/monin/sites-available/{{ proj_name }}.conf
     - watch_in:
-      - service: monin
+      - service: monit
