@@ -3,7 +3,7 @@
 {% set proj_name = 'munin' %}
 
 include:
-  - munin
+  - munin.master
 
 {% if grains['os_family'] == 'Debian' %}
   {% set sites_enabled = "/etc/munin/sites-enabled" %}
