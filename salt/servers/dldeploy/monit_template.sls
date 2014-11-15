@@ -2,9 +2,6 @@
 {% set user = 'deploy' %}
 {% set proj_name = 'monit' %}
 
-include:
-  - monit
-
 {% if grains['os_family'] == 'Debian' %}
   {% set sites_enabled = "/etc/monin/sites-enabled" %}
 {% elif grains['os_family'] == 'RedHat' %}
@@ -34,5 +31,3 @@ monin-conf-enabled:
   file.symlink:
     - name: {{ sites_enabled }}/{{ proj_name }}.conf
     - target: /etc/monin/sites-available/{{ proj_name }}.conf
-    - watch_in:
-      - service: monit
