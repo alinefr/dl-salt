@@ -8,6 +8,9 @@
   {% set sites_enabled = "/etc/monin/conf.d" %}
 {% endif%}
 
+include:
+  - nginx
+
 monin-conf:
   file.directory:
     - names:
@@ -25,7 +28,7 @@ monin-conf-available:
       www_root: {{ www_root }}
       proj_name: {{ proj_name }}
     - watch_in:
-      - service: monin
+      - service: nginx
 
 monin-conf-enabled:
   file.symlink:

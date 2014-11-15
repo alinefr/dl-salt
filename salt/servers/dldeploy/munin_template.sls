@@ -8,6 +8,9 @@
   {% set sites_enabled = "/etc/munin/conf.d" %}
 {% endif%}
 
+include:
+  - nginx
+
 munin-conf:
   file.directory:
     - names:
@@ -25,7 +28,7 @@ munin-conf-available:
       www_root: {{ www_root }}
       proj_name: {{ proj_name }}
     - watch_in:
-      - service: munin
+      - service: nginx
 
 munin-conf-enabled:
   file.symlink:
