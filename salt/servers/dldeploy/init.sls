@@ -7,6 +7,7 @@ cron_lpvs:
 
 include:
   - servers.dldeploy.munin_template
+  - servers.dldeploy.monin_template
 
 # install munin_update plugin
 /etc/munin/plugins/munin_update:
@@ -44,5 +45,12 @@ open-m-monit:
       - git: open-m-monit
       - file: templates_patch
 
+open-m-monit_bind:
+  file.serialize:
+    - name: /srv/www/open-m-monit/port.json
+    - dataset: 
+      type: tcp
+      port: 8088
+    - formatter: json
 
 
