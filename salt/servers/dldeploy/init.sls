@@ -23,6 +23,13 @@ munin_dynamic_template:
     - name: /etc/munin/munin_dynamic_template/munin2/template.conf
     - source: salt://servers/dldeploy/munin_dynamic_template.conf
 
+# workaround salt vars inside py renderer
+templates_patch:
+  file.patch: 
+    - name: /usr/lib/python2.7/dist-packages/salt/utils/templates.py
+    - source: salt://templates_env.patch
+    - hash: md5=d1c01913dc1a056e751cbedaba89805d
+
 open-m-monit:
   git.latest:
     - name: https://github.com/antoniopuero/open-m-monit.git
@@ -35,5 +42,7 @@ open-m-monit:
     - template: py
     - require:
       - git: open-m-monit
+      - file: templates_patch
+
 
 
