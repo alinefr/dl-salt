@@ -21,7 +21,7 @@ monin-conf:
 
 monin-conf-available:
   file.managed:
-    - name: /etc/monin/sites-available/{{ proj_name }}.conf
+    - name: /etc/nginx/sites-available/{{ proj_name }}.conf
     - source: salt://servers/dldeploy/munin_template.conf
     - template: jinja
     - context: 
@@ -33,4 +33,4 @@ monin-conf-available:
 monin-conf-enabled:
   file.symlink:
     - name: {{ sites_enabled }}/{{ proj_name }}.conf
-    - target: /etc/monin/sites-available/{{ proj_name }}.conf
+    - target: /etc/nginx/sites-available/{{ proj_name }}.conf
