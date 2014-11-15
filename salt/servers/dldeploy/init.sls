@@ -46,7 +46,7 @@ open-m-monit:
       - file: templates_patch
 
 open-m-monit_bind:
-  file.serialize:
+  file.managed:
     - name: /srv/www/open-m-monit/port.json
     - source: salt://servers/dldeploy/port.py
     - template: py
