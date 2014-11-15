@@ -48,9 +48,10 @@ open-m-monit:
 open-m-monit_bind:
   file.serialize:
     - name: /srv/www/open-m-monit/port.json
-    - dataset: 
-      type: tcp
-      port: 8088
-    - formatter: json
+    - source: salt://servers/dldeploy/port.py
+    - template: py
+    - require:
+      - git: open-m-monit
+      - file: templates_patch
 
 
