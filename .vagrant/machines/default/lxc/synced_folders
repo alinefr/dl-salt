@@ -1,1 +1,0 @@
-{"lxc":{"/srv/salt":{"guestpath":"/srv/salt","hostpath":"/media/sf_Projects/dl-salt/salt","disabled":false},"/vagrant":{"guestpath":"/vagrant","hostpath":"/media/sf_Projects/dl-salt","disabled":false}}}
