@@ -99,7 +99,8 @@ mysql_munin_deps:
   'mysqld',
   'php-fpm',
   'nginx',
-  'sshd'
+  'sshd',
+  'salt-call'
 ] %}
 {{ plugins_dir }}/ps_php5-fpm:
   file:
