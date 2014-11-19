@@ -1,5 +1,6 @@
 {% set proj_name = salt['pillar.get']('proj_name','myproject') %}
 {% set www_root = salt['pillar.get']('project_path','/vagrant') %}
+{% set domain_name = salt['pillar.get']('domain_name','localhost') %}
 {% set user = salt['pillar.get']('project_username','vagrant') %}
 {% set user_home = salt['user.info'](user).home %}
 
@@ -17,7 +18,6 @@ git.config_set:
     - setting_value: git://
     - user: {{ user }}
     - is_global: True
-    - cwd: {{ www_root }}
     - require:
       - pkg: git
 
