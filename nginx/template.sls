@@ -20,7 +20,7 @@ nginx-conf:
 nginx-conf-available:
   file.managed:
     - name: /etc/nginx/sites-available/{{ base.proj_name }}.conf
-    - source: salt://sites/template.conf
+    - source: salt://nginx/template.conf
     - template: jinja
     - context:
       www_root: {{ base.www_root }}
