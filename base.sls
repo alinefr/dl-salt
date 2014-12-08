@@ -12,6 +12,9 @@ include:
   {% set pre_args = '' %}
 {% endif %}
 
+git:
+  pkg.installed
+
 git.config_set:
   module.run:
     - setting_name: url.https://.insteadOf
