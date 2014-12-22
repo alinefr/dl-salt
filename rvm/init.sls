@@ -69,7 +69,6 @@ ruby-2.0.0:
     - default: True
     - user: {{ user }}
     - require:
-      - cmd: rvm-gpg_key
       - pkg: mri-deps
 
 {{ proj_name }}:
