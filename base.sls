@@ -7,7 +7,7 @@
 {% if salt['cmd.run']('test -f ' ~ salt['pillar.get']('project_path','/vagrant') ~ '/Gemfile && echo "yes" || echo "no"') == 'yes' %}
 include:
   - rvm
-  {% set pre_args = '' ~ user_home ~ '/.rvm/bin/rvm 2.0.0@' ~ proj_name ~ ' do' %}
+  {% set pre_args = '' ~ user_home ~ '/.rvm/bin/rvm 2.0.0@' ~ proj_name ~ ' do ' %}
 {% else %}
   {% set pre_args = '' %}
 {% endif %}
