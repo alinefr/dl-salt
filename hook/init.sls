@@ -40,7 +40,7 @@ composer-install:
     - require: 
       - cmd: composer-install
 
-{% if user != 'vagrant' %}
+{% if base.user != 'vagrant' %}
 {{ base.www_root }}/public/storage:
   file.directory:
     - user: www-data
