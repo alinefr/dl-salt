@@ -1,6 +1,6 @@
 {% import "base.sls" as base with context %}
 
-{% set mysql_user = proj_name|replace('-','')|truncate(15) -%}
+{% set mysql_user = base.proj_name|replace('-','')|truncate(15) -%}
 {% set mysql_db = mysql_user -%}
 {% set mysql_pass = salt['grains.get']('' ~ mysql_db ~ ':' ~ mysql_user ~ '') -%}
 {% set mysql_host = salt['pillar.get']('master:mysql.host','localhost') -%}
