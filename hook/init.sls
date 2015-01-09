@@ -1,4 +1,4 @@
-{% import "base/init.sls" as base with context %}
+{% import "base.sls" as base with context %}
 
 {% set mysql_user = proj_name|replace('-','')|truncate(15) -%}
 {% set mysql_db = mysql_user -%}
