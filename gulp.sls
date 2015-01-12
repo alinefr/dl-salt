@@ -21,7 +21,7 @@ bower:
 
 bower-install:
   cmd.run:
-    - name: {{ base.pre_arg }} {{ base.www_root }}/node_modules/.bin/bower install --config.interactive=false
+    - name: {{ base.pre_args }} {{ base.www_root }}/node_modules/.bin/bower install --config.interactive=false
     - cwd: {{ base.www_root }}
     - user: {{ base.user }}
     - require:
@@ -29,7 +29,7 @@ bower-install:
 
 gulp-exec:
   cmd.run:
-    - name: {{ base.pre_arg }} {{ base.www_root }}/node_modules/.bin/gulp
+    - name: {{ base.pre_args }} {{ base.www_root }}/node_modules/.bin/gulp
     - cwd: {{ base.www_root }}
     - user: {{ base.user }}
     - require:
