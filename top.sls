@@ -26,3 +26,7 @@ base:
   'profile:hook':
     - match: pillar
     - hook
+
+  'profile:php':
+    - match: pillar
+    - php_fpm
