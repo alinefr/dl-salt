@@ -2,40 +2,29 @@ base:
   'os:Ubuntu':
     - match: grain
     - base
-    - monit
-    - base.monit_modules
-    - postfix
-    - munin.node.plugins
-    - base.munin_plugins
-
-  'dldeploy.dlapp.co':
-    - servers.dldeploy
-    - munin.master.config
-
-  'dlapp.co':
-    - servers.dlapp
 
   'profile:brunch':
     - match: pillar
-    - base
-    - sites.template
+    - nginx.template
     - brunch
 
   'profile:gulp':
     - match: pillar
-    - base
-    - sites.template
+    - nginx.template
+    - gulp
+
+  'profile:grunt':
+    - match: pillar
+    - nginx.template
     - gulp
 
   'profile:rails':
     - match: pillar
-    - base
-    - sites.template
+    - nginx.template
     - rails
 
   'profile:hook':
     - match: pillar
-    - base
-    - sites.template
+    - nginx.template
     - hook
 
