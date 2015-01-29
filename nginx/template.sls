@@ -25,6 +25,8 @@ nginx-conf-available:
     - context:
       www_root: {{ base.www_root }}
       proj_name: {{ base.proj_name }}
+      user: {{ base.user }}
+      user_home: {{ base.user_home }}
     - watch_in:
       - service: nginx
     - defaults:
