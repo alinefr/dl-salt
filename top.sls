@@ -17,7 +17,7 @@ base:
 
   'profile:grunt':
     - match: pillar
-    - gulp
+    - grunt
 
   'profile:rails':
     - match: pillar
