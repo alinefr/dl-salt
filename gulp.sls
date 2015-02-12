@@ -32,7 +32,7 @@ bower:
 
 gulp-exec:
   cmd.run:
-    - name: {{ base.pre_args }} {{ base.www_root }}/node_modules/.bin/gulp
+    - name: {{ base.pre_args }} {{ base.www_root }}/node_modules/.bin/gulp build
     - cwd: {{ base.www_root }}
     - user: {{ base.user }}
     - require:
