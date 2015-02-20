@@ -1,7 +1,4 @@
-{% set user = salt['pillar.get']('project_username','vagrant') %}
-{% set user_home = salt['user.info'](user).home %}
-{% set www_root = salt['pillar.get']('project_path','/vagrant') %}
-{% set proj_name = salt['pillar.get']('proj_name','myproject') %}
+{% import "base.sls" as base with context %}
 
 include:
   - mysql
@@ -9,12 +6,12 @@ include:
 
 /run/unicorn:
   file.directory:
-    - user: {{ user }}
+    - user: {{ base.user }}
     - makedirs: True
 
 {{ www_root }}/log:
   file.directory:
-    - user: {{ user }}
+    - user: {{ base.user }}
     - makedirs: True
 
 {{ www_root }}/config/unicorn.conf.rb:
@@ -28,18 +25,18 @@ supervisor:
 
 unicorn:
   gem.installed:
-    - user: {{ user }}
-    - ruby: 2.0.0@{{ proj_name }}
+    - user: {{ base.user }}
+    - ruby: 2.0.0@{{ base.proj_name }}
 
   cmd.run:
-    - name: rvm wrapper 2.0.0@{{ proj_name }} system unicorn_rails
-    - user: {{ user }}
+    - name: rvm wrapper 2.0.0@{{ base.proj_name }} system unicorn_rails
+    - user: {{ base.user }}
     - require:
       - gem: unicorn
-    - unless: test -e {{ user_home }}/.rvm/bin/system_unicorn_rails
+    - unless: test -e {{ base.user_home }}/.rvm/bin/system_unicorn_rails
 
   file.managed:
-    - name: /etc/supervisor/conf.d/{{ proj_name }}.conf
+    - name: /etc/supervisor/conf.d/{{ base.proj_name }}.conf
     - source:
       - salt://rails/supervisor.conf
     - user: root
@@ -48,7 +45,7 @@ unicorn:
       - pkg: supervisor
 
   supervisord.running:
-    - name: {{ proj_name }}
+    - name: {{ base.proj_name }}
     - require:
       - pkg: supervisor
       - file: unicorn
@@ -58,16 +55,16 @@ unicorn:
 
 rails-dbconfig:
   file.managed:
-    - name: {{ www_root }}/config/database.yml
+    - name: {{ base.www_root }}/config/database.yml
     - source: salt://rails/database.yml
     - user: {{ user }}
     - template: jinja
 
 rails-assets:
   cmd.run:
-    - name: {{ user_home }}/.rvm/bin/rvm 2.0.0@{{ proj_name }} do bundle exec rake assets:precompile
-    - user: {{ user }}
-    - cwd: {{ www_root }}
+    - name: {{ base.user_home }}/.rvm/bin/rvm 2.0.0@{{ base.proj_name }} do bundle exec rake assets:precompile
+    - user: {{ base.user }}
+    - cwd: {{ base.www_root }}
     - env:
       - RAILS_ENV: production
     - watch_in: 
@@ -75,9 +72,9 @@ rails-assets:
 
 rails-updatedb:
   cmd.run:
-    - name: {{ user_home }}/.rvm/bin/rvm 2.0.0@{{ proj_name }} do bundle exec rake db:migrate
-    - user: {{ user }}
-    - cwd: {{ www_root }}
+    - name: {{ base.user_home }}/.rvm/bin/rvm 2.0.0@{{ base.proj_name }} do bundle exec rake db:migrate
+    - user: {{ base.user }}
+    - cwd: {{ base.www_root }}
     - env: 
       - RAILS_ENV: production
     - watch_in:
