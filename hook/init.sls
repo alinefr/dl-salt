@@ -1,10 +1,5 @@
 {% import "base.sls" as base with context %}
 
-{% set mysql_user = base.proj_name|replace('-','')|truncate(15) -%}
-{% set mysql_db = mysql_user -%}
-{% set mysql_pass = salt['grains.get']('' ~ mysql_db ~ ':' ~ mysql_user ~ '') -%}
-{% set mysql_host = salt['pillar.get']('master:mysql.host','localhost') -%}
-
 hook-deps:
   pkg.installed:
     - pkgs:
@@ -30,14 +25,14 @@ composer-install:
     - require:
       - cmd: get-composer
       - pkg: hook-deps
-    - onlyif: php composer.phar status | grep 'build of composer is over 30 days old' > /dev/null 2>&1 
+    - onlyif: php composer.phar status | grep 'build of composer is over 30 days old' > /dev/null 2>&1
 
-  composer.installed:
-    - name: {{ base.www_root }}
-    - composer: {{ base.www_root }}/composer.phar
-    - no_dev: true
-    - prefer_dist: true
-    - require: 
+install-hook:
+  cmd.run:
+    - name: php composer.phar install --no-interaction --no-dev --prefer-dist
+    - cwd: /srv/www/hook
+    - user: {{ base.user }}
+    - require:
       - cmd: composer-install
 
 {% if base.user != 'vagrant' %}
@@ -50,7 +45,7 @@ composer-install:
 
 {{ base.www_root }}/shared:
   file.directory:
-    - user: {{ user }}
+    - user: {{ base.user }}
     - group: www-data
     - mode: 775
     - makedirs: True
@@ -60,12 +55,11 @@ composer-install:
   file.managed:
     - source: salt://hook/database.php
     - user: {{ base.user }}
-    - defaults: 
-      - mysql_host: {{ mysql_host }}
-      - mysql_user: {{ mysql_user }}
-      - mysql_pass: {{ mysql_pass }}
-      - mysql_db: {{ mysql_db }}
+    - context:
+      mysql_host: {{ salt['pillar.get']('master:mysql.host') }}
+      mysql_user: {{ salt['pillar.get']('master:mysql.user') }}
+      mysql_pass: {{ salt['pillar.get']('master:mysql.pass') }}
+      mysql_db: {{ salt['pillar.get']('master:mysql.db') }}
     - template: jinja
     - require:
-      - composer: composer-install
-
+      - cmd: install-hook
