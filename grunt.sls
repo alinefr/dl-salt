@@ -10,7 +10,7 @@ npm-deps:
 
 npm-install:
   npm.bootstrap: 
-    - names: {{ base.www_root }}
+    - name: {{ base.www_root }}
     - user: {{ base.user }}
     - require:
       - pkg: npm-deps
